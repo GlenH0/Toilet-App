@@ -4,8 +4,8 @@ const NavBar = () => {
     return ( 
         <div className="navBar">
             <div className="links">
-                <Link to="/">Home</Link>
-                <Link to="/map">Map</Link>
+                <Link to="/" className="links-btn" style={{color: 'black'}}>Home</Link>
+                <Link to="/map" className="links-btn"  style={{color: 'black'}}>Map</Link>
             </div>
         </div>
      );

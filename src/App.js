@@ -6,6 +6,7 @@ import NavBar from './NavBar';
 import Map from './Map';
 import ToiletDetails from './Details';
 import ScrollToTop from './ScrollToTop';
+import Footer from './Footer';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         </Switch>
         
       </div>
+      <Footer/>
     </div>
     
     </Router>
