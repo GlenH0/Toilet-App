@@ -1,42 +1,14 @@
 
 import {Link} from 'react-router-dom';
-import {useState, useEffect} from 'react'
+import useFetch from './data'
 import './Home.css'
 
-
 const Home = () => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null);   
-    
+    const {data, error} = useFetch('/api/toilets') 
+    data.sort((a,b) => b.rating - a.rating)
+
     // local fetch due to sorting
-    useEffect(() => {
-        const abortConst = new AbortController();
-
-        fetch('/api/toilets', {signal: abortConst.signal})
-        .then(res => {
-            console.log(res)
-            if(!res.ok){
-                throw Error("NOOB")
-            }
-            return res.json();
-        })
-        .then((data) => {
-            console.log(data);
-            data.sort((a,b) => a.rating - b.rating).reverse();
-            setData(data);
-            setError(null);
-        })
-        .catch((err) => {
-            if(err.name === 'AbortError'){
-                console.log('no fetch')
-            }
-            else{
-                setError(err.message)
-            }
-        })
-
-        return () => abortConst.abort()
-    },[])   
+    
 
     // output of html
     return ( 
