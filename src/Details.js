@@ -4,6 +4,7 @@ import { ImLocation } from "react-icons/im";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { useState } from "react";
+import './Details.css';
 
 const ToiletDetails = () => {
     const { _id } = useParams()

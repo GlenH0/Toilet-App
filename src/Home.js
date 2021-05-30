@@ -1,6 +1,8 @@
 
 import {Link} from 'react-router-dom';
 import {useState, useEffect} from 'react'
+import './Home.css'
+
 
 const Home = () => {
     const [data, setData] = useState([]);
@@ -19,6 +21,7 @@ const Home = () => {
             return res.json();
         })
         .then((data) => {
+            console.log(data);
             data.sort((a,b) => a.rating - b.rating).reverse();
             setData(data);
             setError(null);
