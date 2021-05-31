@@ -14,8 +14,8 @@ const ToiletDetails = () => {
     review.sort((a,b) => new Date(b.date) - new Date(a.date))
     
     const { _id } = useParams()
-    const { toiletData, toiletError } = useFetch('/api/toilets/' + _id)
-    console.log(toiletData);
+    const { data, error } = useFetch('/api/toilets/' + _id)
+    // console.log(toiletData);
     const [showBtn, setShowBtn] = useState(false)
     const [empty, setEmpty] = useState('')
     const [reviewText, setReviewText] = useState('')
@@ -55,22 +55,22 @@ const ToiletDetails = () => {
 
     return (
         <div className="details">
-            {toiletError && <div>{toiletError}</div>}
-            {toiletData && (
+            {error && <div>{error}</div>}
+            {data && (
                 <div className='detailsContent'>
 
                     <div className="detailsImg">
-                        <img src={toiletData.image_url} alt="" />
+                        <img src={data.image_url} alt="" />
                     </div>
 
                     <div className="hr"><hr /></div>
 
                     <div className="detailsInfo">
-                        <h2>{toiletData.name}</h2>
-                        <p><ImLocation /> {toiletData.location}</p>
-                        {toiletData.hasBidet === true && <div><IoIosCheckmarkCircleOutline style={{color:'green'}}/>Bidet Friendly</div>}
-                        {toiletData.hasBidet === false && <div><IoIosCloseCircleOutline style={{color:'red'}}/>No Bidget</div>}
-                    </div>
+                        <h2>{data.name}</h2>
+                        <p><ImLocation /> {data.location}</p>
+                        {data.hasBidet === true && <div><IoIosCheckmarkCircleOutline style={{color:'green'}}/>Bidet Friendly</div>}
+                        {data.hasBidet === false && <div><IoIosCloseCircleOutline style={{color:'red'}}/>No Bidget</div>}
+                        </div>
 
                 </div>
             )}
