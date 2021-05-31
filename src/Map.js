@@ -6,6 +6,13 @@ import  ToiletForm  from "./ToiletForm";
 const Map = () => {
   //testing for editing one toilet only
 
+  useEffect(() => {
+    getToilet().then(data => console.log(data))
+    return () => {
+        
+    }
+}, [])
+
   const useForm = (initialValues) => {
     const [values, setValues] = useState(initialValues);
 
@@ -31,7 +38,7 @@ const Map = () => {
     hasBidet: false,
   });
 
-  console.log(typeof handleChange);
+  
 
   const handleCheckBox = (e) => {
     console.log(`name is ${e.target.name} value is ${e.target.checked}`);
