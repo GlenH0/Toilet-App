@@ -1,0 +1,17 @@
+.map {
+    width: 100%;
+    min-width: 900px;
+    overflow: hidden;
+    position: relative;
+    padding-top : 10px
+}
+
+
+.mapDetails {
+    margin-top: 150px;
+    margin-bottom : 500px;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    margin-left: 10vw;
+}
