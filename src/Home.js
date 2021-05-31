@@ -6,7 +6,7 @@ import './Home.css'
 const Home = () => {
     const {data, error} = useFetch('/api/toilets') 
     data.sort((a,b) => b.rating - a.rating)
-
+    //setData(data)
     // local fetch due to sorting
     
 
