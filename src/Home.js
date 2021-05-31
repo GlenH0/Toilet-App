@@ -1,6 +1,6 @@
 
 import {Link} from 'react-router-dom';
-import useFetch from './data'
+import useFetch from './useFetch(s)/data'
 import './Home.css'
 
 const Home = () => {
