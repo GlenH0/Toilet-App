@@ -82,22 +82,43 @@
     font-size: 16px;
     padding: 10px 20px;
     border: none;
-    cursor: pointer;
     border-radius: 5px;
     margin: 8px;
   
     box-shadow: 2px 2px 4px #555;
   }
   
-  .submit-button button:hover{
+  /* .submit-button button:hover{
     background-color: #aeaeae;
-  }
+  } */
   
   .gotText {
     background-color: #1184e8;
+    cursor: pointer;
   }
   .noText {
     background-color: #555;
   }
+
+  .submit-button-clear{
+    background-color: #555;
+    cursor: pointer !important;
+  }
   
+  .details-review-content {
+    display: flex;
+    padding-top: 50px;
+  }
+  .details-review-content-input {
+    font-size: 20px;
+  }
+  .details-review-content-input span{
+    margin-right: 10px;
+  }
+  .details-review-content-inputDate{
+    font-size: 12px;
+    margin-left: 10px;
+    margin-bottom: 1px;
+    color: #aeaeae;
+  }
   

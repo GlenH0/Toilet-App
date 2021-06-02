@@ -8,26 +8,26 @@ const useReviewFetch = (url) => {
     useEffect(() => {
         const abortConst = new AbortController();
 
-        fetch(url, {signal: abortConst.signal})
-        .then(res => {
-            console.log(res)
-            if(!res.ok){
-                throw Error("NOOB")
-            }
-            return res.json();
-        })
-        .then((review) => {
-            setReview(review);
-            setReviewError(null);
-        })
-        .catch((err) => {
-            if(err.name === 'AbortError'){
-                console.log('no fetch')
-            }
-            else{
-                setReviewError(err.message)
-            }
-        })
+            fetch(url, {signal: abortConst.signal})
+            .then(res => {
+                console.log(res)
+                if(!res.ok){
+                    throw Error("NOOB")
+                }
+                return res.json();
+            })
+            .then((review) => {
+                setReview(review);
+                setReviewError(null);
+            })
+            .catch((err) => {
+                if(err.name === 'AbortError'){
+                    console.log('no fetch')
+                }
+                else{
+                    setReviewError(err.message)
+                }
+            }) 
 
         return () => abortConst.abort()
     }, [url])
