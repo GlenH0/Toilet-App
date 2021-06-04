@@ -4,6 +4,14 @@ export async function getToilet(){
     return toiletJSONData
 }
 
+export async function getAllToilets(){
+    let toiletData = await fetch('api/toilets');
+    console.log(toiletData);
+    let toiletJSONData = toiletData.json()
+    return toiletJSONData
+}
+
+
 
 export async function patchToilet(toilet){
     let updatedToiletData = await fetch('api/toilets/60a69edb016b594ea8d3e47a', {
