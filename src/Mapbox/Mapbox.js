@@ -3,7 +3,8 @@ import ReactDOM from "react-dom"
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import "./Mapbox.css";
 import "mapbox-gl/dist/mapbox-gl.css";
-import Popup from './Popup'
+import FormPopup from './FormPopup'
+import Marker from './Marker'
 import useFetch from "../useFetch(s)/data";
 import { getAllToilets } from "../services/toilet";
 
@@ -22,6 +23,7 @@ const Mapbox = () => {
   const [zoom, setZoom] = useState(15);
 
 
+
   useEffect(() => {
     //current ref is referred to as map.current
     if (map.current) return; // initialize map only once
@@ -32,12 +34,11 @@ const Mapbox = () => {
       zoom: zoom,
     });
 
+    //runs once only 
     const fetchToiletData = async () => {
       const toiletData = await getAllToilets();
       toiletData.forEach((toilet) => {
-        new mapboxgl.Marker()
-          .setLngLat([toilet.lng, toilet.lat])
-          .addTo(map.current);
+        Marker(toilet,map.current,true)
       });
     };
 
@@ -46,30 +47,18 @@ const Mapbox = () => {
 
   useEffect(() => {
     if (!map.current) return; // wait for map to initialize
-    map.current.on("click", function (e) {
+    map.current.on("click", (e) => {
       //wipe current marker, create new marker on current place
       if (tempMarker) {
         tempMarker.remove();
       }
-
       //still dk for fuck here maybe can use to create new toilet
       setFormLatLng(e.lngLat);
-
-      //now wan use imported JSX must like this bobian
-      let popupDiv = document.createElement('div')
-      ReactDOM.render(<Popup lat={e.lngLat.lat} lng={e.lngLat.lng}/>,popupDiv)
+      tempMarker = Marker(e.lngLat,map.current,false)
       
-      let popup = new mapboxgl.Popup({ offset: 25 });
-      popup.setDOMContent(popupDiv)
-
-      tempMarker = new mapboxgl.Marker()
-        .setLngLat([e.lngLat.lng, e.lngLat.lat])
-        .setPopup(popup)
-        .addTo(map.current);
-      
-        //force popup to appear first
-      tempMarker.togglePopup();
-      
+      console.log(tempMarker);
+      //force popup to appear first
+      //tempMarker.togglePopup();
     });
   },[]);
 

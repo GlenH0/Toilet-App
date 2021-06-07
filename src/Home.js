@@ -5,15 +5,8 @@ import './Home.css'
 import Carousel from './carousel/Carousel'
 
 const Home = () => {
-<<<<<<< HEAD
-    const {data, error} = useFetch('/api/toilets') 
-    data.sort((a,b) => b.rating - a.rating)
-   
-    
-=======
     const { data, error } = useFetch('/api/toilets')
     data.sort((a, b) => b.rating - a.rating)
->>>>>>> 19c0f2aaa4e41fea000fcb5f0cc3f58ec0be4762
 
     // output of html
     return (

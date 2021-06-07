@@ -1,8 +1,8 @@
-const Popup = (props) => {
+const FormPopup = (props) => {
   console.log(props);
     return (
         
-            <div className="popup">
+            <div className="FormPopup">
               <span>lat: {props.lat}, lng: {props.lng}</span>
             </div>
           
@@ -10,4 +10,4 @@ const Popup = (props) => {
 }
 
 
-export default Popup
+export default FormPopup
