@@ -22,9 +22,10 @@ const Marker = (data,map,isRealMarker) => {
 
         let popup = new mapboxgl.Popup({})
         popup.setDOMContent(popupDiv)
+        
 
         marker.setPopup(popup)
-        marker.on('click',function (e) {
+        marker.on('click',(e) => {
             e.stopPropagation();
             marker.togglePopup()
             
@@ -40,13 +41,16 @@ const Marker = (data,map,isRealMarker) => {
 
         marker.setPopup(popup)
        
-        marker.on('click',function (e) {
+        marker.on('click',(e) => {
             e.stopPropagation();
             marker.togglePopup()
             
         })
+
+        console.log(`${marker} this is from markerjs`);
     }
 
+    
     return marker
     
 }

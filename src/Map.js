@@ -14,7 +14,7 @@ const MapComponent = () => {
 
   return (
     <div>
-      <h1>lalala</h1><br></br>
+      <h1>Click on the map to add new toilets</h1><br></br>
       <Mapbox/>
       <button onClick={() => setShowForm(!showForm)}>Toggle Toilet Form</button>
       <div>{showForm && <ToiletForm/>}

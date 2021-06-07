@@ -16,14 +16,15 @@ const Mapbox = () => {
 
   const map = useRef(null);
   const mapContainer = useRef(null);
-  let tempMarker;
+  const tempMarker = useRef(null);
+  //let tempMarker
   const [lng, setLng] = useState(103.683632);
   const [lat, setLat] = useState(1.348065);
   const [formLatLng, setFormLatLng] = useState({});
   const [zoom, setZoom] = useState(15);
 
 
-
+  //useeffect to intialise map
   useEffect(() => {
     //current ref is referred to as map.current
     if (map.current) return; // initialize map only once
@@ -32,6 +33,10 @@ const Mapbox = () => {
       style: "mapbox://styles/mapbox/streets-v11",
       center: [lng, lat],
       zoom: zoom,
+      maxBounds : [
+        [103.67934668325415 ,1.3390231935245396 ],
+        [103.69015263599829, 1.3562527379503138] 
+      ]
     });
 
     //runs once only 
@@ -45,11 +50,22 @@ const Mapbox = () => {
     fetchToiletData();
   }, []);
 
+  //for temp marker
   useEffect(() => {
     if (!map.current) return; // wait for map to initialize
     map.current.on("click", (e) => {
       //wipe current marker, create new marker on current place
-      if (tempMarker) {
+      if (tempMarker.current) {
+        tempMarker.current.remove();
+      }
+      //still dk for fuck here maybe can use to create new toilet
+      tempMarker.current = Marker(e.lngLat,map.current,false)
+      setFormLatLng(e.lngLat);
+      console.log(tempMarker.current);
+      //force popup to appear first
+      tempMarker.current.togglePopup();
+
+     /*  if (tempMarker) {
         tempMarker.remove();
       }
       //still dk for fuck here maybe can use to create new toilet
@@ -58,9 +74,12 @@ const Mapbox = () => {
       
       console.log(tempMarker);
       //force popup to appear first
-      //tempMarker.togglePopup();
+      tempMarker.togglePopup();
+ */
+
+      
     });
-  },[]);
+  },[formLatLng]);
 
   return (
     <div className="mapbox">
