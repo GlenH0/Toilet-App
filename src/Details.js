@@ -11,7 +11,7 @@ import useReviewFetch from "./useFetch(s)/fetchReviews";
 
 const ToiletDetails = () => {
 
-    const { review, reviewErr } = useReviewFetch('/api/reviews/')
+    const { review, reviewErr, setReview } = useReviewFetch('/api/reviews/')
     review.sort((a, b) => new Date(b.date) - new Date(a.date))
 
     const { _id } = useParams()
@@ -48,8 +48,10 @@ const ToiletDetails = () => {
             method: 'POST',
             headers: { 'Content-Type': "application/json" },
             body: JSON.stringify(critique)
-        }).then(() => {
-            console.log('new review added!')
+        }).then((res) => {
+            return res.json()
+        }).then((newReview) => {
+            setReview(oldReviews => [...oldReviews,newReview])
         })
         setReviewText('')
         setValue({});

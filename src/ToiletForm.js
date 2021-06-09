@@ -1,5 +1,6 @@
 import { getToilet, patchToilet, postToilet } from "./services/toilet";
 import { useEffect, useState, useReducer } from "react";
+import './Map.css'
 
 
 //props should include lat lng from the map
@@ -13,6 +14,7 @@ const ToiletForm = (props) => {
           values,
           setValues,
           (e) => {
+            console.log(values);
             setValues({
               ...values,
               [e.target.name]: e.target.value,
@@ -23,8 +25,8 @@ const ToiletForm = (props) => {
     
       const [formValues, setFormValues, handleChange] = useForm({
         name: "",
-        lat: "",
-        lng: "",
+        lat: props.lat,
+        lng: props.lng,
         rating: 0,
         location: "",
         hasBidet: false,
@@ -44,23 +46,18 @@ const ToiletForm = (props) => {
         //prevent page from reloading on form submission
         e.preventDefault();
         console.log(formValues);
-        postToilet(formValues).then((data) => console.log(data));
-      };
+        postToilet(formValues).then((data) =>{ 
+        alert('toilet successfully added')
+        console.log(data);
+
+      })};
     return (
-        <div className="map">
-            <div className="mapDetails">
+        <div>
+            <div>
                 <form onSubmit={handleSubmit}>
                     <label>
                         <p>Name</p>
                         <input name="name" type="text" value={formValues.name} onChange={handleChange}/>
-                    </label>
-                    <label>
-                        <p>Latitude</p>
-                        <input name="lat" min='-120' max="120"  value={formValues.lat} onChange={handleChange}/>
-                    </label>
-                    <label>
-                        <p>Longitude</p>
-                        <input name="lng" min='-120' max="120" value={formValues.lng} onChange={handleChange}/>
                     </label>
                     <label>
                         <p>Has Bidet?</p>

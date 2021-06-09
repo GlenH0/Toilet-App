@@ -1,4 +1,5 @@
 import React,  { useRef, useEffect, useState } from "react";
+import { getToilet, patchToilet, postToilet } from "../services/toilet";
 import ReactDOM from "react-dom"
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import "./Mapbox.css";
@@ -18,13 +19,52 @@ const Mapbox = () => {
   const map = useRef(null);
   const mapContainer = useRef(null);
   const tempMarker = useRef(null);
-  let counter = useRef(0)
-  //let tempMarker
   const [lng, setLng] = useState(103.683632);
   const [lat, setLat] = useState(1.348065);
   const [formLatLng, setFormLatLng] = useState({});
   const [zoom, setZoom] = useState(15);
   const isTempRender = useRef(false)
+
+  const useForm = (initialValues) => {
+    const [values, setValues] = useState(initialValues);
+
+    
+    return [
+      values,
+      setValues,
+      //handleChange function
+      (e) => {
+        console.log('im called');
+        setValues({
+          ...values,
+          [e.target.name]: e.target.value,
+        });
+      },
+    ];
+  };
+
+  const [formValues, setFormValues, handleChange] = useForm({
+    name: "",
+    rating: 0,
+    location: "",
+    hasBidet: false,
+  });
+
+  const handleCheckBox = (e) => {
+    console.log(`name is ${e.target.name} value is ${e.target.checked}`);
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.checked,
+    });
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleSubmit = (e) => {
+    //prevent page from reloading on form submission
+    e.preventDefault();
+    console.log(formValues);
+    postToilet(formValues).then((data) => console.log(data));
+  };
 
   //useeffect to intialise map
   useEffect(() => {
@@ -41,34 +81,6 @@ const Mapbox = () => {
       ]
     });
 
-    map.current.on('load', (e) => {
-      map.current.addSource('tempMarker', {
-        type : 'geojson',
-        data : {
-          type : 'FeatureCollection',
-          features : []
-        }
-      })
-
-      map.current.addLayer({
-        id : "tempMarker-layer",
-        type : "symbol",
-        source : "tempMarker",
-        layout : {
-          'icon-image' : 'toilet-15',
-          'icon-padding': 0,
-          'icon-allow-overlap': true,
-          'icon-size' : 1.5
-        }
-
-      })
-
-      map.current.on('click','tempMarker', e => {
-        console.log(e);
-      })
-    })
-    
-
     //runs once only 
     const fetchToiletData = async () => {
       const toiletData = await getAllToilets();
@@ -82,30 +94,47 @@ const Mapbox = () => {
     return () => map.current.remove()
   }, []);
 
-  //for temp marker
+
   useEffect(() => {
-    //runs only once on startup, wont run again for 
     if (!map.current) return; // wait for map to initialize
-  
-    //everytime useEffect runs, its adding a new eventlistener
     map.current.on("click", (e) => {
-      console.log(e.lngLat.lng);
+      //wipe current marker, create new marker on current place
+      if (tempMarker.current) {
+        tempMarker.current.remove();
+      }
+      //still dk for fuck here maybe can use to create new toilet
+      tempMarker.current = TempMarker(e.lngLat,map.current,false)
+      setFormLatLng(e.lngLat);
+      console.log(tempMarker.current);
+      //force popup to appear first
+      tempMarker.current.togglePopup();
 
-      map.current.getSource('tempMarker').setData({
-        type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [e.lngLat.lng, e.lngLat.lat],
-      },
-      properties: {
-        name: `Random Point`,
-        description: `description for Random Point`,
-      },
-      })
+     /*  if (tempMarker) {
+        tempMarker.remove();
+      }
+      //still dk for fuck here maybe can use to create new toilet
+      setFormLatLng(e.lngLat);
+      tempMarker = Marker(e.lngLat,map.current,false)
+      
+      console.log(tempMarker);
+      //force popup to appear first
+      tempMarker.togglePopup();
+ */
 
+      
+    });
+  },[]);
+
+  
+    
+      //wipe current marker, create new marker on current place
+      //still dk for fuck here maybe can use to create new toilet
      
-  });
-  },[]); //shouldnt be rerendering here.
+      
+    
+    //everytime useEffect runs, its adding a new eventlistener
+    
+
 
   
 
