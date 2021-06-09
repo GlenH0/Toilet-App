@@ -5,6 +5,7 @@ import "./Mapbox.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import FormPopup from './FormPopup'
 import Marker from './Marker'
+import TempMarker from './TempMarker'
 import useFetch from "../useFetch(s)/data";
 import { getAllToilets } from "../services/toilet";
 
@@ -17,12 +18,13 @@ const Mapbox = () => {
   const map = useRef(null);
   const mapContainer = useRef(null);
   const tempMarker = useRef(null);
+  let counter = useRef(0)
   //let tempMarker
   const [lng, setLng] = useState(103.683632);
   const [lat, setLat] = useState(1.348065);
   const [formLatLng, setFormLatLng] = useState({});
   const [zoom, setZoom] = useState(15);
-
+  const isTempRender = useRef(false)
 
   //useeffect to intialise map
   useEffect(() => {
@@ -39,6 +41,34 @@ const Mapbox = () => {
       ]
     });
 
+    map.current.on('load', (e) => {
+      map.current.addSource('tempMarker', {
+        type : 'geojson',
+        data : {
+          type : 'FeatureCollection',
+          features : []
+        }
+      })
+
+      map.current.addLayer({
+        id : "tempMarker-layer",
+        type : "symbol",
+        source : "tempMarker",
+        layout : {
+          'icon-image' : 'toilet-15',
+          'icon-padding': 0,
+          'icon-allow-overlap': true,
+          'icon-size' : 1.5
+        }
+
+      })
+
+      map.current.on('click','tempMarker', e => {
+        console.log(e);
+      })
+    })
+    
+
     //runs once only 
     const fetchToiletData = async () => {
       const toiletData = await getAllToilets();
@@ -48,38 +78,36 @@ const Mapbox = () => {
     };
 
     fetchToiletData();
+
+    return () => map.current.remove()
   }, []);
 
   //for temp marker
   useEffect(() => {
+    //runs only once on startup, wont run again for 
     if (!map.current) return; // wait for map to initialize
+  
+    //everytime useEffect runs, its adding a new eventlistener
     map.current.on("click", (e) => {
-      //wipe current marker, create new marker on current place
-      if (tempMarker.current) {
-        tempMarker.current.remove();
-      }
-      //still dk for fuck here maybe can use to create new toilet
-      tempMarker.current = Marker(e.lngLat,map.current,false)
-      setFormLatLng(e.lngLat);
-      console.log(tempMarker.current);
-      //force popup to appear first
-      tempMarker.current.togglePopup();
+      console.log(e.lngLat.lng);
 
-     /*  if (tempMarker) {
-        tempMarker.remove();
-      }
-      //still dk for fuck here maybe can use to create new toilet
-      setFormLatLng(e.lngLat);
-      tempMarker = Marker(e.lngLat,map.current,false)
-      
-      console.log(tempMarker);
-      //force popup to appear first
-      tempMarker.togglePopup();
- */
+      map.current.getSource('tempMarker').setData({
+        type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [e.lngLat.lng, e.lngLat.lat],
+      },
+      properties: {
+        name: `Random Point`,
+        description: `description for Random Point`,
+      },
+      })
 
-      
-    });
-  },[formLatLng]);
+     
+  });
+  },[]); //shouldnt be rerendering here.
+
+  
 
   return (
     <div className="mapbox">

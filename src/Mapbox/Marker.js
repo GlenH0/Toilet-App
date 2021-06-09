@@ -27,7 +27,8 @@ const Marker = (data,map,isRealMarker) => {
         marker.setPopup(popup)
         marker.on('click',(e) => {
             e.stopPropagation();
-            marker.togglePopup()
+            console.log(e);
+            //marker.togglePopup()
             
         })
     }

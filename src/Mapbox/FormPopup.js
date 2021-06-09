@@ -1,5 +1,6 @@
 const FormPopup = (props) => {
-  console.log(props);
+  
+  
     return (
         
             <div className="FormPopup">
