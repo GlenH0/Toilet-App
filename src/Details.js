@@ -11,14 +11,13 @@ import { BsFillTrashFill } from "react-icons/bs";
 
 const ToiletDetails = () => {
 
-    const { review, reviewErr, setReview } = useReviewFetch('/api/reviews/')
-    review.sort((a, b) => new Date(b.date) - new Date(a.date))
-
     const { _id } = useParams()
+    const { review, reviewErr, setReview } = useReviewFetch(`/api/reviews/toilet?toiletID=${_id}`)
+    review.sort((a, b) => new Date(b.date) - new Date(a.date))
     const { data, error } = useFetch('/api/toilets/' + _id)
     const [showBtn, setShowBtn] = useState(false)
     const [reviewText, setReviewText] = useState('')
-
+    
     // display button when clicked
     const showButton = () => {
         setShowBtn(true)
@@ -62,6 +61,7 @@ const ToiletDetails = () => {
         fetch('/api/reviews/' + x._id, {
             method: 'DELETE'
         }).then(() => {
+            setReview(oldReviews => oldReviews.filter(review => review._id !== x._id))
         })
     }
 
@@ -96,7 +96,6 @@ const ToiletDetails = () => {
                 <div className="details-reviews">
                     {reviewErr && <div>{reviewErr}</div>}
                     {review.map((x) => {
-                        if (x.toiletID === _id) {
                             return (
                                 <div className="details-review-content" key={x._id}>
                                     <p className="details-review-content-input"><span><AiFillMessage /></span>{x.reviewText}</p>
@@ -104,7 +103,6 @@ const ToiletDetails = () => {
                                     <button className="details-review-content-button" onClick={handleDelete(x)}><BsFillTrashFill/></button>
                                 </div>
                             )
-                        }
                     })}
                 </div>
             </div>

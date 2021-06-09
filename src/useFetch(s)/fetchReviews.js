@@ -30,7 +30,7 @@ const useReviewFetch = (url) => {
             }) 
 
         return () => abortConst.abort()
-    }, [url, review])
+    }, [url])
     
     return {review, reviewErr, setReview}
 }
