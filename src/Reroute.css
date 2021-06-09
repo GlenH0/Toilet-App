@@ -1,0 +1,19 @@
+.notfound{
+    margin:auto;
+    padding-top: 200px;
+    margin-bottom: 90px;
+}
+
+.notfound-img{
+    height: 100%;
+    width: 60%;
+    box-shadow: 0px 15px 50px;
+    margin-bottom: 60px;
+}
+
+.notfound-link{
+    font-family: "Lato";
+    font-weight: 600;
+    text-decoration: none;
+    color: black;
+}

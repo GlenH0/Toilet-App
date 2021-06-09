@@ -1,5 +1,8 @@
 /* footer */
-footer{
+.footer{
     font-family: 'Lato';
     margin: 10px;
+    position:absolute;
+    left:0;
+    right:0;
   }
