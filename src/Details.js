@@ -51,6 +51,9 @@ const ToiletDetails = () => {
             return res.json()
         }).then((newReview) => {
             setReview(oldReviews => [...oldReviews,newReview])
+            
+            setReviewText('')
+            setShowBtn(false);
         })
     }
     // delete button for reviews
