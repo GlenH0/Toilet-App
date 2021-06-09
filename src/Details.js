@@ -48,16 +48,10 @@ const ToiletDetails = () => {
             method: 'POST',
             headers: { 'Content-Type': "application/json" },
             body: JSON.stringify(critique)
-<<<<<<< HEAD
         }).then((res) => {
             return res.json()
         }).then((newReview) => {
             setReview(oldReviews => [...oldReviews,newReview])
-=======
-        }).then(() => {
-            setReviewText('');
-            setShowBtn(false);
->>>>>>> c3b120fb3b6eb0862be6e921575d15d438340699
         })
     }
     // delete button for reviews
