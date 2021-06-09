@@ -106,11 +106,13 @@
   }
   
   .details-review-content {
-    display: flex;
+    display: flex ;
     padding-top: 50px;
   }
   .details-review-content-input {
     font-size: 20px;
+    max-width: 69%;
+    text-align: left;
   }
   .details-review-content-input span{
     margin-right: 10px;
@@ -121,4 +123,14 @@
     margin-bottom: 1px;
     color: #aeaeae;
   }
+
+  .details-review-content-button {
+    cursor: pointer;
+    margin-left: 10px;
+    border: none;
+    background-color: white;
+  }
   
+  .details-review-content-button:hover {
+    color: red;
+  }
