@@ -1,6 +1,6 @@
 import mapboxgl from "mapbox-gl"
 import ReactDOM from "react-dom"
-import FormPopup from "./FormPopup"
+// import FormPopup from "./FormPopup"
 import ToiletForm from "../ToiletForm"
 
 const TempMarker = (data,map) => {
