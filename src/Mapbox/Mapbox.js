@@ -1,13 +1,13 @@
 import React,  { useRef, useEffect, useState } from "react";
-import { getToilet, patchToilet, postToilet } from "../services/toilet";
-import ReactDOM from "react-dom"
+import { postToilet } from "../services/toilet";
+// import ReactDOM from "react-dom"
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import "./Mapbox.css";
 import "mapbox-gl/dist/mapbox-gl.css";
-import FormPopup from './FormPopup'
+// import FormPopup from './FormPopup'
 import Marker from './Marker'
 import TempMarker from './TempMarker'
-import useFetch from "../useFetch(s)/data";
+// import useFetch from "../useFetch(s)/data";
 import { getAllToilets } from "../services/toilet";
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_KEY;
@@ -81,6 +81,8 @@ const Mapbox = () => {
       ]
     });
 
+    
+
     //runs once only 
     const fetchToiletData = async () => {
       const toiletData = await getAllToilets();
@@ -134,13 +136,11 @@ const Mapbox = () => {
     
     //everytime useEffect runs, its adding a new eventlistener
     
-
-
-  
-
   return (
-    <div className="mapbox">
-      <div ref={mapContainer} className="map-container" />
+    <div className="mapbox-container">
+      <div className="mapbox">
+        <div ref={mapContainer} className="mapbox-container" />
+      </div>
     </div>
   );
 };

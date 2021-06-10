@@ -20,23 +20,23 @@ const Home = () => {
             <div className="btm">
                 <h1><span className='btmTitle'>THE</span> FINEST</h1>
                 {error && <div>{error}</div>}
-                <div className="btmToilet">
 
-                <Carousel show={3}>
-                    {data.map((x) => (
-                        <div className="btmContent" key={x._id}>
-                            <div className="btmImg">
-                                <Link to={`/toiletdetails/${x._id}`}>
-                                    <img src={x.image_url} alt="" />
-                                </Link>
+                <div className="btmToilet">
+                    <Carousel show={3}>
+                        {data.map((x) => (
+                            <div className="btmContent" key={x._id}>
+                                <div className="btmImg">
+                                    <Link className="btmImg-hover" to={`/toiletdetails/${x._id}`}>
+                                        <img src={x.image_url} alt="" />
+                                    </Link>
+                                </div>
+                                <div className="details">
+                                    <h2>{x.name}</h2>
+                                    <p>Ratings: {x.rating} stars</p>
+                                </div>
                             </div>
-                            <div className="details">
-                                <h2>{x.name}</h2>
-                                <p>Ratings: {x.rating} stars</p>
-                            </div>
-                        </div>
-                    ))}
-                </Carousel>
+                        ))}
+                    </Carousel>
                 </div>
             </div>
         </div>

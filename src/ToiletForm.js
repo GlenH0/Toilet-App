@@ -1,5 +1,5 @@
-import { getToilet, patchToilet, postToilet } from "./services/toilet";
-import { useEffect, useState, useReducer } from "react";
+import { postToilet } from "./services/toilet";
+import { useState} from "react";
 import './Map.css'
 
 

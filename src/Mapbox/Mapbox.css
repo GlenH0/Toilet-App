@@ -1,5 +1,20 @@
 .mapboxgl-canvas-container {
 
-    height: 80vh;
+    height: 100vh;
 
+}
+
+.mapbox{
+    width: 80% !important;
+    height: 85% !important;
+    margin: auto;
+    position: absolute;
+    margin-bottom: 0;
+    top: 10vh;
+    left: 10%;
+    box-shadow: 1px 15px 50px;
+}
+
+.mapbox-container {
+    height: 100%;
 }

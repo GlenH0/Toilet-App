@@ -1,4 +1,4 @@
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import useFetch from './useFetch(s)/data';
 import { ImLocation } from "react-icons/im";
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -50,7 +50,7 @@ const ToiletDetails = () => {
         }).then((res) => {
             return res.json()
         }).then((newReview) => {
-            setReview(oldReviews => [...oldReviews,newReview])
+            setReview([...review,newReview])
             
             setReviewText('')
             setShowBtn(false);
