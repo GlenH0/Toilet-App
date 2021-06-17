@@ -17,6 +17,7 @@ const Marker = (data,map,isRealMarker) => {
                             name={data.name} 
                             location={data.location}
                             image_url = {data.image_url}
+                            rating = {data.rating}
                             _id = {data._id}
                             />,popupDiv)
 

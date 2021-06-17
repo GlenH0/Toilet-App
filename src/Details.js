@@ -1,4 +1,5 @@
 import { useParams } from "react-router";
+import {Link} from 'react-router-dom'
 import useFetch from './useFetch(s)/data';
 import { ImLocation } from "react-icons/im";
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -17,6 +18,7 @@ const ToiletDetails = () => {
     const { data, error } = useFetch('/api/toilets/' + _id)
     const [showBtn, setShowBtn] = useState(false)
     const [reviewText, setReviewText] = useState('')
+    const [rating,setRating] = useState(0)
     
     // display button when clicked
     const showButton = () => {
@@ -41,8 +43,7 @@ const ToiletDetails = () => {
     // handling post request
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        const critique = { reviewText, toiletID: _id, date: new Date() };
+        const critique = { reviewText,rating, toiletID: _id, date: new Date() };
         fetch('/api/reviews/', {
             method: 'POST',
             headers: { 'Content-Type': "application/json" },
@@ -53,6 +54,7 @@ const ToiletDetails = () => {
             setReview([...review,newReview])
             
             setReviewText('')
+            setRating(0)
             setShowBtn(false);
         })
     }
@@ -81,10 +83,12 @@ const ToiletDetails = () => {
                     <div className="hr"><hr /></div>
 
                     <div className="detailsInfo">
+                    
                         <h2>{data.name}</h2>
-                        <p><ImLocation /> {data.location}</p>
+                        <Link to={'/map'}><p><ImLocation /> {data.location}</p></Link>
                         {data.hasBidet === true && <div><IoIosCheckmarkCircleOutline style={{ color: 'green' }} />Bidet Friendly</div>}
-                        {data.hasBidet === false && <div><IoIosCloseCircleOutline style={{ color: 'red' }} />No Bidget</div>}
+                        {data.hasBidet === false && <div><IoIosCloseCircleOutline style={{ color: 'red' }} />No Bidet</div>}
+                        <p>{data.rating} stars</p>
                     </div>
 
                 </div>
@@ -94,6 +98,8 @@ const ToiletDetails = () => {
                 <form onSubmit={handleSubmit}>
                     <label>THE <span>CRITIQUE</span></label>
                     <textarea required value={reviewText} onChange={(e) => setReviewText(e.target.value)} placeholder="Your critique" onClick={showButton}></textarea>
+                    <label>Rating</label>
+                    <input value={rating} type="number" min="0" max="5" onChange={(e) => setRating(parseInt(e.target.value))}/>
                     {showBtn ? <SubmitBtn /> : null}
                 </form>
                 <div className="details-reviews">
@@ -104,6 +110,7 @@ const ToiletDetails = () => {
                                     <p className="details-review-content-input"><span><AiFillMessage /></span>{x.reviewText}</p>
                                     <p className="details-review-content-inputDate">{x.date.slice(0, 10)}</p>
                                     <button className="details-review-content-button" onClick={handleDelete(x)}><BsFillTrashFill/></button>
+                                    {x.rating && <p>{x.rating} stars</p>}
                                 </div>
                             )
                     })}

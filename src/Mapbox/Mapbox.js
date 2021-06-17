@@ -23,48 +23,10 @@ const Mapbox = () => {
   const [lat, setLat] = useState(1.348065);
   const [formLatLng, setFormLatLng] = useState({});
   const [zoom, setZoom] = useState(15);
+  const [addToiletMode,setAddToiletMode] = useState(false)
   const isTempRender = useRef(false)
 
-  const useForm = (initialValues) => {
-    const [values, setValues] = useState(initialValues);
-
-    
-    return [
-      values,
-      setValues,
-      //handleChange function
-      (e) => {
-        console.log('im called');
-        setValues({
-          ...values,
-          [e.target.name]: e.target.value,
-        });
-      },
-    ];
-  };
-
-  const [formValues, setFormValues, handleChange] = useForm({
-    name: "",
-    rating: 0,
-    location: "",
-    hasBidet: false,
-  });
-
-  const handleCheckBox = (e) => {
-    console.log(`name is ${e.target.name} value is ${e.target.checked}`);
-    setFormValues({
-      ...formValues,
-      [e.target.name]: e.target.checked,
-    });
-  };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleSubmit = (e) => {
-    //prevent page from reloading on form submission
-    e.preventDefault();
-    console.log(formValues);
-    postToilet(formValues).then((data) => console.log(data));
-  };
+  
 
   //useeffect to intialise map
   useEffect(() => {
@@ -94,49 +56,9 @@ const Mapbox = () => {
     fetchToiletData();
 
     return () => map.current.remove()
-  }, []);
-
-
-  useEffect(() => {
-    if (!map.current) return; // wait for map to initialize
-    map.current.on("click", (e) => {
-      //wipe current marker, create new marker on current place
-      if (tempMarker.current) {
-        tempMarker.current.remove();
-      }
-      //still dk for fuck here maybe can use to create new toilet
-      tempMarker.current = TempMarker(e.lngLat,map.current,false)
-      setFormLatLng(e.lngLat);
-      console.log(tempMarker.current);
-      //force popup to appear first
-      tempMarker.current.togglePopup();
-
-     /*  if (tempMarker) {
-        tempMarker.remove();
-      }
-      //still dk for fuck here maybe can use to create new toilet
-      setFormLatLng(e.lngLat);
-      tempMarker = Marker(e.lngLat,map.current,false)
-      
-      console.log(tempMarker);
-      //force popup to appear first
-      tempMarker.togglePopup();
- */
-
-      
-    });
-  },[]);
-
-  
-    
-      //wipe current marker, create new marker on current place
-      //still dk for fuck here maybe can use to create new toilet
-     
-      
-    
-    //everytime useEffect runs, its adding a new eventlistener
-    
+  }, []);    
   return (
+    
     <div className="mapbox-container">
       <div className="mapbox">
         <div ref={mapContainer} className="mapbox-container" />
