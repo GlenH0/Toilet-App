@@ -64,9 +64,9 @@ const ToiletDetails = () => {
             body: JSON.stringify(critique)
         }).then((res) => {
             return res.json()
-        }).then((newReview) => {
-            setReview([...review, newReview])
-
+        }).then((res) => {
+            console.log(res.newRating);
+            setReview([...review, res.newReview])
             setReviewText('')
             setRating(0)
             setShowBtn(false);
