@@ -8,6 +8,7 @@ import { useState } from "react";
 import './Details.css';
 import useReviewFetch from "./useFetch(s)/fetchReviews";
 import { BsFillTrashFill } from "react-icons/bs";
+import ReviewBox from "./Mapbox/ReviewBox";
 
 import ReactStars from "react-rating-stars-component";
 
@@ -20,7 +21,7 @@ const ToiletDetails = () => {
     const [showBtn, setShowBtn] = useState(false)
     const [reviewText, setReviewText] = useState('')
     const [rating, setRating] = useState(0)
-    const [reply, setReply] = useState(false)
+    const [replyID, setReplyID] = useState('')
 
     // display button when clicked
     const showButton = () => {
@@ -94,6 +95,33 @@ const ToiletDetails = () => {
         
     )
 
+    function renderReview(x,isReply){
+        
+        if (isReply){
+            return    <ReviewBox
+                        _id={x._id}
+                        rating={x.rating}
+                        date = {x.date}
+                        isReply={true}
+                        handleIndividualReply={handleIndividualReply(x)}
+                        handleDelete={handleDelete(x)}
+            />
+        }
+
+        else {
+            return    <ReviewBox
+                        _id={x._id}
+                        rating={x.rating}
+                        date = {x.date}
+                        isReply={false}
+                        handleIndividualReply={handleIndividualReply(x)}
+                        handleDelete={handleDelete(x)}
+            />
+
+        }
+        
+    }
+
     const handleIndividualReply = x => e => {
         {console.log("yo")}
         
@@ -110,14 +138,9 @@ const ToiletDetails = () => {
         //         setReply(false)
         //     }
         // }
-
-        // console.log(x._id)
-        // if(x._id == ){
-        //     setReply(true)
-        // }
-        // else{setReply(false)}
-        
-        }
+        setReplyID(x._id)
+        renderReview(x,true)
+    }
 
     return (
         <div className="details">
@@ -163,20 +186,13 @@ const ToiletDetails = () => {
                     {reviewErr && <div>{reviewErr}</div>}
                     {/* {console.log(review[0])} */}
                     {review.map((x) => {
-                        return (
-                            <div className="details-review-content" key={x._id}>
-                                <p className="details-review-content-input"><span><AiFillMessage /></span>{x.reviewText}</p>
-                                <p className="details-review-content-inputDate">{x.date.slice(0, 10)}</p>
-                                <button className="details-review-content-button" onClick={handleDelete(x)}><BsFillTrashFill /></button>
-                                {x.rating && <p>{x.rating} stars</p>}
-                                
-                                <div className="details-reviews-content-reply">
-                                <button onClick={handleIndividualReply(x)}>Reply {x._id}</button>
-                                {/* {console.log(x._id)} */}
-                                {reply? <HandleReply/> : null}
-                                </div>
-                            </div>
-                        )
+                        if (x._id === replyID){
+                            return renderReview(x,true)
+                        }
+                        else {
+                            return renderReview(x,false)
+                        }
+                       
                     })} 
                 </div>
             </div>
