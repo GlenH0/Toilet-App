@@ -38,7 +38,7 @@
     font-family: "Lato";
     font-size: 3vw;
     font-weight: 300;
-    padding: 20px;
+    padding: 50px;
   }
   
   .btm .btmTitle {
@@ -47,19 +47,11 @@
     font-weight: 700;
   }
   
-  /* .btmToilet {
-    display: flex;
-    flex-direction: row; 
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 0;
-  } */
-  
   .btmImg {
-    width: 25vw;
+    width: 22vw;
     height: 55vh;
     margin: auto;
-    box-shadow: 1px 2px 10px #555;
+    box-shadow: 5px 5px 20px -1px #000000
   }
   .btmContent img{
     width: 100%;
@@ -68,6 +60,17 @@
   }
   .btmImg-hover img:hover{
     opacity: 0.4;
+  }
+
+  .details h2{
+    font-size: 18px;
+    text-transform: uppercase;
+    padding-bottom: 1px;
+  }
+
+  .details span{
+    font-family: 'Lato';
+    font-weight: bold;
   }
   
   

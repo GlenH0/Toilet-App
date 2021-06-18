@@ -1,14 +1,15 @@
 import { useParams } from "react-router";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import useFetch from './useFetch(s)/data';
 import { ImLocation } from "react-icons/im";
-import { IoIosCloseCircleOutline } from "react-icons/io";
-import { IoIosCheckmarkCircleOutline } from "react-icons/io";
-import { AiFillMessage } from "react-icons/ai";
+import { IoIosCloseCircleOutline, IoIosCheckmarkCircleOutline } from "react-icons/io";
+import { AiFillMessage, AiFillStar } from "react-icons/ai";
 import { useState } from "react";
 import './Details.css';
 import useReviewFetch from "./useFetch(s)/fetchReviews";
 import { BsFillTrashFill } from "react-icons/bs";
+
+import ReactStars from "react-rating-stars-component";
 
 const ToiletDetails = () => {
 
@@ -18,8 +19,9 @@ const ToiletDetails = () => {
     const { data, error } = useFetch('/api/toilets/' + _id)
     const [showBtn, setShowBtn] = useState(false)
     const [reviewText, setReviewText] = useState('')
-    const [rating,setRating] = useState(0)
-    
+    const [rating, setRating] = useState(0)
+    const [reply, setReply] = useState(false)
+
     // display button when clicked
     const showButton = () => {
         setShowBtn(true)
@@ -30,20 +32,32 @@ const ToiletDetails = () => {
         e.preventDefault();
         setReviewText('')
         setShowBtn(false);
+        setRating(0)
     }
 
     // submit button
     const SubmitBtn = () => (
         <div className="submit-button">
-            <button disabled={!reviewText} className={reviewText.length > 0 ? "gotText" : "noText"}>Submit</button>
+            <ReactStars
+                count={5}
+                onChange={newRating => setRating(newRating)}
+                isHalf={true}
+                size={28}
+                activeColor="#ffd700"
+            />
+            {rating}
+            <div className="submit-button-buttons">
+            <button disabled={rating == 0} className={reviewText.length && rating > 0 ? "gotText" : "noText"}>Submit</button>
             <button className="submit-button-clear" onClick={clearText}>Cancel</button>
+            </div>
         </div>
     )
 
     // handling post request
     const handleSubmit = (e) => {
         e.preventDefault();
-        const critique = { reviewText,rating, toiletID: _id, date: new Date() };
+        const critique = { reviewText, rating, toiletID: _id, date: new Date() };
+        console.log(rating)
         fetch('/api/reviews/', {
             method: 'POST',
             headers: { 'Content-Type': "application/json" },
@@ -51,8 +65,8 @@ const ToiletDetails = () => {
         }).then((res) => {
             return res.json()
         }).then((newReview) => {
-            setReview([...review,newReview])
-            
+            setReview([...review, newReview])
+
             setReviewText('')
             setRating(0)
             setShowBtn(false);
@@ -70,6 +84,41 @@ const ToiletDetails = () => {
         })
     }
 
+    // handling reply
+    const HandleReply = () => (
+        <div>
+            <form>
+                <textarea required placeholder="Your reply"></textarea>
+            </form>
+        </div>
+        
+    )
+
+    const handleIndividualReply = x => e => {
+        {console.log("yo")}
+        
+        
+        // for(let i=0; i < review.length; i++){
+        //     // {console.log(review[i]._id)}
+        //     {console.log(x._id)}
+
+        //     if(x._id == review[i]._id){
+        //         setReply(true)
+        //         console.log('hi')
+        //     } 
+        //     else{
+        //         setReply(false)
+        //     }
+        // }
+
+        // console.log(x._id)
+        // if(x._id == ){
+        //     setReply(true)
+        // }
+        // else{setReply(false)}
+        
+        }
+
     return (
         <div className="details">
             {error && <div>{error}</div>}
@@ -80,15 +129,23 @@ const ToiletDetails = () => {
                         <img src={data.image_url} alt="" />
                     </div>
 
-                    <div className="hr"><hr /></div>
-
                     <div className="detailsInfo">
-                    
-                        <h2>{data.name}</h2>
-                        <Link to={'/map'}><p><ImLocation /> {data.location}</p></Link>
-                        {data.hasBidet === true && <div><IoIosCheckmarkCircleOutline style={{ color: 'green' }} />Bidet Friendly</div>}
-                        {data.hasBidet === false && <div><IoIosCloseCircleOutline style={{ color: 'red' }} />No Bidet</div>}
-                        <p>{data.rating} stars</p>
+
+                        <div className="detailsInfo-inside">
+                            <h2>{data.name}</h2>
+
+                            <p style={{ float: "left" }}><AiFillStar style={{ color: '#aeaeae' }} /> {data.rating} stars</p><br />
+
+                            <div className="detailsInfo-inside-bidet">
+                                {data.hasBidet === true && <div><p><IoIosCheckmarkCircleOutline style={{ color: 'green' }} /> Bidet Friendly</p></div>}
+
+                                {data.hasBidet === false && <div><IoIosCloseCircleOutline style={{ color: 'red' }} /> No Bidet</div>}
+                            </div>
+
+                            <Link style={{ textDecoration: 'none', color: '#aeaeae' }} to={'/map'}><button><ImLocation style={{ color: '#aeaeae' }} /> {data.location}</button></Link>
+                        </div>
+
+
                     </div>
 
                 </div>
@@ -98,22 +155,29 @@ const ToiletDetails = () => {
                 <form onSubmit={handleSubmit}>
                     <label>THE <span>CRITIQUE</span></label>
                     <textarea required value={reviewText} onChange={(e) => setReviewText(e.target.value)} placeholder="Your critique" onClick={showButton}></textarea>
-                    <label>Rating</label>
-                    <input value={rating} type="number" min="0" max="5" onChange={(e) => setRating(parseInt(e.target.value))}/>
+
                     {showBtn ? <SubmitBtn /> : null}
                 </form>
+
                 <div className="details-reviews">
                     {reviewErr && <div>{reviewErr}</div>}
+                    {/* {console.log(review[0])} */}
                     {review.map((x) => {
-                            return (
-                                <div className="details-review-content" key={x._id}>
-                                    <p className="details-review-content-input"><span><AiFillMessage /></span>{x.reviewText}</p>
-                                    <p className="details-review-content-inputDate">{x.date.slice(0, 10)}</p>
-                                    <button className="details-review-content-button" onClick={handleDelete(x)}><BsFillTrashFill/></button>
-                                    {x.rating && <p>{x.rating} stars</p>}
+                        return (
+                            <div className="details-review-content" key={x._id}>
+                                <p className="details-review-content-input"><span><AiFillMessage /></span>{x.reviewText}</p>
+                                <p className="details-review-content-inputDate">{x.date.slice(0, 10)}</p>
+                                <button className="details-review-content-button" onClick={handleDelete(x)}><BsFillTrashFill /></button>
+                                {x.rating && <p>{x.rating} stars</p>}
+                                
+                                <div className="details-reviews-content-reply">
+                                <button onClick={handleIndividualReply(x)}>Reply {x._id}</button>
+                                {/* {console.log(x._id)} */}
+                                {reply? <HandleReply/> : null}
                                 </div>
-                            )
-                    })}
+                            </div>
+                        )
+                    })} 
                 </div>
             </div>
 

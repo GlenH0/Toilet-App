@@ -4,21 +4,22 @@
     width: 100%;
     overflow: hidden;
     margin-bottom: 50px;
-    
   }
   
   .detailsContent {
     margin-top: 80px;
     display: flex;
-    flex-direction: row;
+    /* flex-direction: row; */
     flex: 1;
     margin-left: 10vw;
+    justify-content: center;
   }
   
   .detailsImg {
-    width: 45vw;
-    height: 70vh; 
-    padding-right: 20px;
+    width: 600px;
+    height: 600px; 
+    position: relative;
+    right: 25%;
   }
   
   .detailsImg img {
@@ -30,16 +31,48 @@
   .detailsInfo {
     font-family: 'Righteous';
     margin-left: 50px;
-    text-align: left;
-    width: 100%;
+    width: 600px;
+    height: 600px;
     font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    box-shadow: 5px 5px 15px -8px rgba(0,0,0,0.81);
+    position: absolute;
+    left: 45%;
+    top: 15%;
+
+    background-image: url(backdrop.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .detailsInfo .detailsInfo-inside {
+    justify-content: center;
+    margin: auto;
+  }
+
+  .detailsInfo-inside-bidet{
+    padding-top: 20px;
+  }
+
+  .detailsInfo-inside p{
+    font-family: 'Lato';
+    font-size: 16px;
     font-weight: 500;
   }
   
   .detailsInfo h2 {
     font-family: 'Lato';
-    font-size: 5vw;
-    padding-bottom: 20px;
+    font-size: 28px;
+    text-transform: uppercase;
+  }
+
+  .detailsInfo-inside button {
+    padding: 6px 25px;
+    margin-top: 10px;
+    cursor:pointer;
+    border-radius: 4px;
+    font-size: 14px;
   }
   
   .details-input {
@@ -88,10 +121,6 @@
     box-shadow: 2px 2px 4px #555;
   }
   
-  /* .submit-button button:hover{
-    background-color: #aeaeae;
-  } */
-  
   .gotText {
     background-color: #1184e8;
     cursor: pointer;
@@ -108,6 +137,7 @@
   .details-review-content {
     display: flex ;
     padding-top: 50px;
+    max-width: 95%;
   }
   .details-review-content-input {
     font-size: 20px;
@@ -133,4 +163,10 @@
   
   .details-review-content-button:hover {
     color: red;
+  }
+
+  .submit-button{
+    clear: both;
+    display: block;
+    text-align: left;
   }
