@@ -170,3 +170,31 @@
     display: block;
     text-align: left;
   }
+
+  #react-paginate {
+    margin-top : 2em
+  }
+
+  #react-paginate ul {
+    display: inline-block;
+    text-align : center;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  #react-paginate li {
+    display: inline-block;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  #react-paginate li.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  #react-paginate li:hover:not(.active) {
+    background-color : #ddd;;
+    color: white;
+  }

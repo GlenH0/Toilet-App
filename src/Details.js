@@ -7,22 +7,30 @@ import { AiFillMessage, AiFillStar } from "react-icons/ai";
 import { useState } from "react";
 import './Details.css';
 import useReviewFetch from "./useFetch(s)/fetchReviews";
+import useReviewPaginationFetch from "./useFetch(s)/fetchReviewPagination";
 import { BsFillTrashFill } from "react-icons/bs";
 import ReviewBox from "./Mapbox/ReviewBox";
+import ReactPaginate from "react-paginate";
 
 import ReactStars from "react-rating-stars-component";
 
 const ToiletDetails = () => {
-
+    
     const { _id } = useParams()
-    const { review, reviewErr, setReview } = useReviewFetch(`/api/reviews/toilet?toiletID=${_id}`)
+    // show 5 reviews per page
+    const [offset, setOffset] = useState(0)
+    const { review, reviewErr, setReview,numPages } = useReviewPaginationFetch(`/api/reviews/toilet?toiletID=${_id}`,offset,5)
     review.sort((a, b) => new Date(b.date) - new Date(a.date))
+   
+    console.log(numPages.current);
+    //const { review, reviewErr, setReview } = useReviewFetch(`/api/reviews/toilet?toiletID=${_id}`)
+   
     const { data, error } = useFetch('/api/toilets/' + _id)
     const [showBtn, setShowBtn] = useState(false)
     const [reviewText, setReviewText] = useState('')
     const [rating, setRating] = useState(0)
     const [replyID, setReplyID] = useState('')
-
+    
     // display button when clicked
     const showButton = () => {
         setShowBtn(true)
@@ -142,6 +150,13 @@ const ToiletDetails = () => {
         renderReview(x,true)
     }
 
+    function handlePageClick(data){
+        console.log(data);
+        //will update the offset to send over new offset to calculate what data to return over
+        setOffset(data.selected*5)
+        console.log(offset);
+    }
+
     return (
         <div className="details">
             {error && <div>{error}</div>}
@@ -195,8 +210,22 @@ const ToiletDetails = () => {
                        
                     })} 
                 </div>
+               
             </div>
-
+            <div id="react-paginate">
+                    <ReactPaginate
+                        previousLabel={'previous'}
+                        nextLabel={'next'}
+                        breakLabel={'...'}
+                        breakClassName={'break-me'}
+                        pageCount={numPages.current}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={handlePageClick}
+                        containerClassName={'pagination'}
+                        activeClassName={'active'} 
+                    />
+                </div>
         </div>
     );
 }

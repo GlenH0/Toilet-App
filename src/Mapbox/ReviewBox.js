@@ -3,7 +3,6 @@ import { BsFillTrashFill } from "react-icons/bs";
 
 
 const ReviewBox = (props) => {
-    console.log(props);
     const HandleReply = () => (
         <div>
             <form>
