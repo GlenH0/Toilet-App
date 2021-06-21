@@ -30,7 +30,8 @@ const ToiletDetails = () => {
     const [reviewText, setReviewText] = useState('')
     const [rating, setRating] = useState(0)
     const [replyID, setReplyID] = useState('')
-    
+    const [replyText,setReplyText] = useState('')
+     
     // display button when clicked
     const showButton = () => {
         setShowBtn(true)
@@ -107,17 +108,21 @@ const ToiletDetails = () => {
         
         if (isReply){
             return    <ReviewBox
+                        key={x._id}
                         _id={x._id}
                         rating={x.rating}
                         date = {x.date}
                         isReply={true}
                         handleIndividualReply={handleIndividualReply(x)}
                         handleDelete={handleDelete(x)}
+                        handleReplyText={(e) => setReplyText(e.target.value)}
+                        replyText = {replyText}
             />
         }
 
         else {
             return    <ReviewBox
+                        key={x._id}
                         _id={x._id}
                         rating={x.rating}
                         date = {x.date}
@@ -157,6 +162,15 @@ const ToiletDetails = () => {
         console.log(offset);
     }
 
+    const mappedReview = review.map(x => {
+        if (x._id === replyID){
+            return (renderReview(x,true))
+        }
+        else {
+            return (renderReview(x,false))
+        }
+    })
+
     return (
         <div className="details">
             {error && <div>{error}</div>}
@@ -193,22 +207,13 @@ const ToiletDetails = () => {
                 <form onSubmit={handleSubmit}>
                     <label>THE <span>CRITIQUE</span></label>
                     <textarea required value={reviewText} onChange={(e) => setReviewText(e.target.value)} placeholder="Your critique" onClick={showButton}></textarea>
-
-                    {showBtn ? <SubmitBtn /> : null}
+                    {showBtn && <SubmitBtn />}
                 </form>
 
                 <div className="details-reviews">
                     {reviewErr && <div>{reviewErr}</div>}
                     {/* {console.log(review[0])} */}
-                    {review.map((x) => {
-                        if (x._id === replyID){
-                            return renderReview(x,true)
-                        }
-                        else {
-                            return renderReview(x,false)
-                        }
-                       
-                    })} 
+                    {mappedReview} 
                 </div>
                
             </div>
