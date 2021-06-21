@@ -134,7 +134,7 @@
     cursor: pointer !important;
   }
   
-  .details-review-content {
+  .details-review-all-content {
     display: flex ;
     padding-top: 50px;
     max-width: 95%;
@@ -168,5 +168,9 @@
   .submit-button{
     clear: both;
     display: block;
+    text-align: left;
+  }
+
+  .details-reviews-content-reply{
     text-align: left;
   }

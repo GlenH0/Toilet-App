@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 import useFetch from './useFetch(s)/data';
 import { ImLocation } from "react-icons/im";
 import { IoIosCloseCircleOutline, IoIosCheckmarkCircleOutline } from "react-icons/io";
-import { AiFillMessage, AiFillStar } from "react-icons/ai";
+import { AiFillStar, AiFillMessage } from "react-icons/ai";
+import { BsFillTrashFill } from "react-icons/bs";
 import { useState } from "react";
 import './Details.css';
 import useReviewFetch from "./useFetch(s)/fetchReviews";
-import { BsFillTrashFill } from "react-icons/bs";
-import ReviewBox from "./Mapbox/ReviewBox";
+import ReviewBox from "./ReviewBox";
 
 import ReactStars from "react-rating-stars-component";
 
@@ -22,6 +22,12 @@ const ToiletDetails = () => {
     const [reviewText, setReviewText] = useState('')
     const [rating, setRating] = useState(0)
     const [replyID, setReplyID] = useState('')
+
+    const [replyText, setReplyText] = useState('')
+    const [showReply, setShowReply] = useState(false)
+
+    const[text, setText] = useState('')
+
 
     // display button when clicked
     const showButton = () => {
@@ -85,62 +91,65 @@ const ToiletDetails = () => {
         })
     }
 
-    // handling reply
-    const HandleReply = () => (
-        <div>
-            <form>
-                <textarea required placeholder="Your reply"></textarea>
-            </form>
-        </div>
+    // function renderReview(x, showReply){
+    //     {console.log(showReply)}
+    //     if (showReply){
+    //         return    <ReviewBox
+    //                     _id={x._id}
+    //                     rating={x.rating}
+    //                     date = {x.date}
+    //                     reviewText = {x.reviewText}
+    //                     showReply = {showReply}
+    //                     // isReply={true}
+    //                     handleIndividualReply={handleIndividualReply(x)}
+    //                     handleDelete={handleDelete(x)}
+    //         />
+    //     }
+
+    //     else {
+    //         return    <ReviewBox
+    //                     _id={x._id}
+    //                     rating={x.rating}
+    //                     date = {x.date}
+    //                     reviewText = {x.reviewText}
+    //                     isReply={false}
+    //                     handleIndividualReply={handleIndividualReply(x)}
+    //                     handleDelete={handleDelete(x)}
+    //         />
+
+    //     }
         
-    )
+    // }
 
-    function renderReview(x,isReply){
-        
-        if (isReply){
-            return    <ReviewBox
-                        _id={x._id}
-                        rating={x.rating}
-                        date = {x.date}
-                        isReply={true}
-                        handleIndividualReply={handleIndividualReply(x)}
-                        handleDelete={handleDelete(x)}
-            />
-        }
-
-        else {
-            return    <ReviewBox
-                        _id={x._id}
-                        rating={x.rating}
-                        date = {x.date}
-                        isReply={false}
-                        handleIndividualReply={handleIndividualReply(x)}
-                        handleDelete={handleDelete(x)}
-            />
-
-        }
-        
-    }
-
-    const handleIndividualReply = x => e => {
+    const handleIndividualReply = x => {
         {console.log("yo")}
-        
-        
-        // for(let i=0; i < review.length; i++){
-        //     // {console.log(review[i]._id)}
-        //     {console.log(x._id)}
-
-        //     if(x._id == review[i]._id){
-        //         setReply(true)
-        //         console.log('hi')
-        //     } 
-        //     else{
-        //         setReply(false)
-        //     }
-        // }
+        setShowReply(true)
+        console.log(x._id)
         setReplyID(x._id)
-        renderReview(x,true)
+        // renderReview(x,true) 
     }
+    // {console.log(clickId)}
+
+    const HandleReply = ({id}) => {
+        if(id == replyID){
+            return(
+                <div>
+                <form>
+                    <textarea value={replyText} onChange={(e) => setReplyText(e.target.value)} placeholder="Your reply" required></textarea>
+                    {console.log("this " + id)}
+                    {console.log(replyText)}
+                    <div className="reply-btn">
+                        {/* className={props.replyText.length > 0 ? "gotText" : "noText"} */}
+                        <button >Submit</button>
+                        <button>Cancel</button>
+                    </div>
+                </form>
+            </div>
+            )
+        }
+        return null
+    }
+    
 
     return (
         <div className="details">
@@ -186,14 +195,40 @@ const ToiletDetails = () => {
                     {reviewErr && <div>{reviewErr}</div>}
                     {/* {console.log(review[0])} */}
                     {review.map((x) => {
-                        if (x._id === replyID){
-                            return renderReview(x,true)
-                        }
-                        else {
-                            return renderReview(x,false)
-                        }
+                        // if (x._id === replyID){
+                            // return renderReview(x,true)
+                            return (
+                                <div className="details-review-content" key={x._id}>
+                                    <div className="details-review-all-content">
+                                        <p className="details-review-content-input"><span><AiFillMessage /></span>{x.reviewText}</p>
+                                        <p className="details-review-content-inputDate">{x.date.slice(0, 10)}</p>
+                                        <button className="details-review-content-button" onClick={handleDelete}><BsFillTrashFill /></button>
+                                    </div>
+                                    
+                                    <div className="details-reviews-content-reply">
+                                            
+                                        {x.rating && <p>{x.rating} stars</p>}
+                                        <button onClick={() => handleIndividualReply(x)}>Reply</button>
+                                        {/* {console.log(x._id)} */}
+                                        {/* {console.log(showReply)} */}
+                                        {showReply ? <HandleReply id={x._id}/> : null}
+                                        
+                                    </div>
+
+                                    {/* testing textarea */}
+                                    <form action="">
+                                        <textarea value={text} onChange={(e)=>setText(e.target.value)} placeholder="hello"></textarea>
+                                    </form>
+                                </div>
+                            )
+                        // }
+                        // else {
+                        //     return renderReview(x,false)
+                        // }
                        
                     })} 
+
+                    
                 </div>
             </div>
 
