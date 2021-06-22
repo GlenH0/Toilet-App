@@ -4,7 +4,7 @@ import useFetch from './useFetch(s)/data';
 import { ImLocation } from "react-icons/im";
 import { IoIosCloseCircleOutline, IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { AiFillMessage, AiFillStar } from "react-icons/ai";
-import { useState } from "react";
+import { useState,useRef } from "react";
 import './Details.css';
 import useReviewFetch from "./useFetch(s)/fetchReviews";
 import useReviewPaginationFetch from "./useFetch(s)/fetchReviewPagination";
@@ -19,18 +19,20 @@ const ToiletDetails = () => {
     const { _id } = useParams()
     // show 5 reviews per page
     const [offset, setOffset] = useState(0)
-    const { review, reviewErr, setReview,numPages } = useReviewPaginationFetch(`/api/reviews/toilet?toiletID=${_id}`,offset,5)
+    const { review, reviewErr, setReview,numPages,isLoading } = useReviewPaginationFetch(`/api/reviews/toilet?toiletID=${_id}`,offset,5)
     review.sort((a, b) => new Date(b.date) - new Date(a.date))
    
-    console.log(numPages.current);
+    console.log('running');
     //const { review, reviewErr, setReview } = useReviewFetch(`/api/reviews/toilet?toiletID=${_id}`)
-   
     const { data, error } = useFetch('/api/toilets/' + _id)
     const [showBtn, setShowBtn] = useState(false)
     const [reviewText, setReviewText] = useState('')
     const [rating, setRating] = useState(0)
     const [replyID, setReplyID] = useState('')
     const [replyText,setReplyText] = useState('')
+    const renderCounter = useRef(0)
+    renderCounter.current++
+    console.log(renderCounter.current)
      
     // display button when clicked
     const showButton = () => {
@@ -63,8 +65,8 @@ const ToiletDetails = () => {
         </div>
     )
 
-    // handling post request
-    const handleSubmit = (e) => {
+    //handling post request
+    const handleReviewSubmit = (e) => {
         e.preventDefault();
         const critique = { reviewText, rating, toiletID: _id, date: new Date() };
         console.log(rating)
@@ -76,7 +78,7 @@ const ToiletDetails = () => {
             return res.json()
         }).then((res) => {
             console.log(res.newRating);
-            setReview([...review, res.newReview])
+            //setReview([...review, res.newReview])
             setReviewText('')
             setRating(0)
             setShowBtn(false);
@@ -104,6 +106,11 @@ const ToiletDetails = () => {
         
     )
 
+    const handleReplySubmit = id => e => {
+        console.log(id);
+
+    }
+
     function renderReview(x,isReply){
         
         if (isReply){
@@ -117,6 +124,7 @@ const ToiletDetails = () => {
                         handleDelete={handleDelete(x)}
                         handleReplyText={(e) => setReplyText(e.target.value)}
                         replyText = {replyText}
+                        handleReplySubmit={handleReplySubmit}
             />
         }
 
@@ -129,6 +137,7 @@ const ToiletDetails = () => {
                         isReply={false}
                         handleIndividualReply={handleIndividualReply(x)}
                         handleDelete={handleDelete(x)}
+                        
             />
 
         }
@@ -136,21 +145,7 @@ const ToiletDetails = () => {
     }
 
     const handleIndividualReply = x => e => {
-        {console.log("yo")}
-        
-        
-        // for(let i=0; i < review.length; i++){
-        //     // {console.log(review[i]._id)}
-        //     {console.log(x._id)}
 
-        //     if(x._id == review[i]._id){
-        //         setReply(true)
-        //         console.log('hi')
-        //     } 
-        //     else{
-        //         setReply(false)
-        //     }
-        // }
         setReplyID(x._id)
         renderReview(x,true)
     }
@@ -204,7 +199,7 @@ const ToiletDetails = () => {
             )}
             <div className="details-input">
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleReviewSubmit}>
                     <label>THE <span>CRITIQUE</span></label>
                     <textarea required value={reviewText} onChange={(e) => setReviewText(e.target.value)} placeholder="Your critique" onClick={showButton}></textarea>
                     {showBtn && <SubmitBtn />}
@@ -212,13 +207,12 @@ const ToiletDetails = () => {
 
                 <div className="details-reviews">
                     {reviewErr && <div>{reviewErr}</div>}
-                    {/* {console.log(review[0])} */}
-                    {mappedReview} 
+                    {!isLoading && mappedReview} 
                 </div>
                
             </div>
             <div id="react-paginate">
-                    <ReactPaginate
+                    {!isLoading && <ReactPaginate
                         previousLabel={'previous'}
                         nextLabel={'next'}
                         breakLabel={'...'}
@@ -229,7 +223,7 @@ const ToiletDetails = () => {
                         onPageChange={handlePageClick}
                         containerClassName={'pagination'}
                         activeClassName={'active'} 
-                    />
+                    />}
                 </div>
         </div>
     );

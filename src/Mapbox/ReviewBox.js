@@ -1,7 +1,7 @@
 import { AiFillMessage, AiFillStar } from "react-icons/ai";
 import { BsFillTrashFill } from "react-icons/bs";
 
-const HandleReply = (props) => (
+const Reply = (props) => (
     <div>
         <form>
             <textarea required value={props.replyText} onChange={props.handleReplyText} placeholder="Your reply"></textarea>
@@ -9,6 +9,8 @@ const HandleReply = (props) => (
     </div>
 
 )
+
+
 const ReviewBox = (props) => {
 
 
@@ -22,7 +24,7 @@ const ReviewBox = (props) => {
             <div className="details-reviews-content-reply">
                 <button onClick={props.handleIndividualReply}>Reply {props._id}</button>
                 {/* {console.log(x._id)} */}
-                {props.isReply && <HandleReply replyText={props.replyText} handleReplyText={props.handleReplyText} />}
+                {props.isReply && <Reply replyText={props.replyText} handleReplyText={props.handleReplyText} />}
             </div>
         </div>
     )

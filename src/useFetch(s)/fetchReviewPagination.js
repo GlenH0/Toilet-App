@@ -4,16 +4,20 @@ const useReviewPaginationFetch = (url,offset,perPage) => {
     const cache = useRef({})
     const [review, setReview] = useState([]);
     const [reviewErr, setReviewError] = useState(null);
+    const [isLoading, setIsLoading] = useState(true)
     const numPages = useRef(null) 
-    
+    console.log('goddamn is running again');
 
     useEffect(() => {
+        
         const abortConst = new AbortController();
             const fetchReview = async() => {
+                setIsLoading(true)
                 if (cache.current[url]){
                     console.log('using cache');
                     let reviewsPerPage = cache.current[url].slice(offset,perPage+offset) 
                     setReview(reviewsPerPage)
+                    setIsLoading(false)
 
                 }
                 else {
@@ -26,6 +30,7 @@ const useReviewPaginationFetch = (url,offset,perPage) => {
                         numPages.current = Math.ceil(data.length/perPage)
                         console.log(numPages.current);
                         setReviewError(null)    
+                        setIsLoading(false)
                     } catch (error) {
                         setReviewError(error.message)
                     }
@@ -65,7 +70,7 @@ const useReviewPaginationFetch = (url,offset,perPage) => {
         return () => abortConst.abort()
     }, [url,offset])
     
-    return {review, reviewErr, setReview, numPages}
+    return {review, reviewErr, setReview, numPages,isLoading}
 }
  
 export default useReviewPaginationFetch;

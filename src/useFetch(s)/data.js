@@ -3,6 +3,7 @@ import {useState, useEffect} from 'react'
 const useFetch = (url) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null); 
+    
 
 
     useEffect(() => {
@@ -19,6 +20,7 @@ const useFetch = (url) => {
         .then((data) => {
             setData(data);
             setError(null);
+            
         })
         .catch((err) => {
             if(err.name === 'AbortError'){
