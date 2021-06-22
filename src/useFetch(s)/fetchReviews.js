@@ -3,9 +3,11 @@ import {useState, useEffect} from 'react'
 const useReviewFetch = (url) => {
     const [review, setReview] = useState([]);
     const [reviewErr, setReviewError] = useState(null); 
-
+    const [isLoading, setIsLoading] = useState(true)
+    console.log('i am invoked');
 
     useEffect(() => {
+        setIsLoading(true)
         const abortConst = new AbortController();
 
             fetch(url, {signal: abortConst.signal})
@@ -19,6 +21,7 @@ const useReviewFetch = (url) => {
             .then((review) => {
                 setReview(review);
                 setReviewError(null);
+                setIsLoading(false)
             })
             .catch((err) => {
                 if(err.name === 'AbortError'){
@@ -32,7 +35,7 @@ const useReviewFetch = (url) => {
         return () => abortConst.abort()
     }, [url])
     
-    return {review, reviewErr, setReview}
+    return {review, reviewErr, setReview,isLoading}
 }
  
 export default useReviewFetch;

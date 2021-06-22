@@ -189,12 +189,5 @@
     border-radius: 5px;
   }
   
-  #react-paginate li.active {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  #react-paginate li:hover:not(.active) {
-    background-color : #ddd;;
-    color: white;
-  }
+ 
+ 

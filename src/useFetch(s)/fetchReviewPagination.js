@@ -8,23 +8,31 @@ const useReviewPaginationFetch = (url,offset,perPage) => {
     const numPages = useRef(null) 
     console.log('goddamn is running again');
 
+    function sortReviewByDate(reviews){
+        return reviews.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) 
+    }
+    
+
     useEffect(() => {
         
         const abortConst = new AbortController();
             const fetchReview = async() => {
                 setIsLoading(true)
+
+                //this is for offset change
                 if (cache.current[url]){
                     console.log('using cache');
+                    //update the cache based on new addition to the review
+                    //cache.current[url] = review 
                     let reviewsPerPage = cache.current[url].slice(offset,perPage+offset) 
                     setReview(reviewsPerPage)
                     setIsLoading(false)
-
                 }
                 else {
                     try {
                         const response = await fetch(url)
                         const data = await response.json()
-                        cache.current[url] = data
+                        cache.current[url] = sortReviewByDate(data)
                         let reviewsPerPage = data.slice(offset,perPage+offset) 
                         setReview(reviewsPerPage)
                         numPages.current = Math.ceil(data.length/perPage)
@@ -68,7 +76,7 @@ const useReviewPaginationFetch = (url,offset,perPage) => {
             // })
 
         return () => abortConst.abort()
-    }, [url,offset])
+    }, [url,offset,perPage])
     
     return {review, reviewErr, setReview, numPages,isLoading}
 }
