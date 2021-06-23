@@ -12,11 +12,20 @@ import "./Details.css";
 import useReviewFetch from "./useFetch(s)/fetchReviews";
 import useReviewPaginationFetch from "./useFetch(s)/fetchReviewPagination";
 import { BsFillTrashFill } from "react-icons/bs";
-import ReviewBox from "./ReviewBox";
+import ReviewBox from "./detailsComponents/ReviewBox";
 import ReactPaginate from "react-paginate";
 import Pagination from "@material-ui/lab/Pagination";
 
 import ReactStars from "react-rating-stars-component";
+
+import ReplyBox from './detailsComponents/ReplyBox'
+
+
+
+
+
+
+
 
 const ToiletDetails = () => {
   const { _id } = useParams();
@@ -154,17 +163,18 @@ const ToiletDetails = () => {
           isReply={true}
           reviewText={x.reviewText}
           handleIndividualReply={handleIndividualReply(x)}
-          handleDelete={handleDelete(x)}
-          handleReplyText={(e) => setReplyText(e.target.value)}
-          replyText={replyText}
-          handleReplySubmit={handleReplySubmit}
-          handleReplyCancel={(e) => {
+          handleDelete={handleDelete(x)}>
+          <ReplyBox
+            replyText={replyText}
+            handleReplyText={(e) => setReplyText(e.target.value)}
+            handleReplySubmit={handleReplySubmit(x._id)}
+            handleReplyCancel={(e) => {
               e.preventDefault()
-              console.log('wa')
               setReplyText('')
               setReviewID('')
           }}
-        />
+
+          /></ReviewBox>
       );
     } else {
       return (
