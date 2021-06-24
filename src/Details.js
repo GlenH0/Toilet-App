@@ -11,7 +11,7 @@ import { useState, useRef, useEffect } from "react";
 import "./Details.css";
 import useReviewFetch from "./useFetch(s)/fetchReviews";
 import useReviewPaginationFetch from "./useFetch(s)/fetchReviewPagination";
-import { BsFillTrashFill } from "react-icons/bs";
+// import { BsFillTrashFill } from "react-icons/bs";
 import ReviewBox from "./detailsComponents/ReviewBox";
 import ReactPaginate from "react-paginate";
 import Pagination from "@material-ui/lab/Pagination";
@@ -19,13 +19,6 @@ import Pagination from "@material-ui/lab/Pagination";
 import ReactStars from "react-rating-stars-component";
 
 import ReplyBox from './detailsComponents/ReplyBox'
-
-
-
-
-
-
-
 
 const ToiletDetails = () => {
   const { _id } = useParams();
@@ -37,7 +30,7 @@ const ToiletDetails = () => {
   const { review, reviewErr, setReview, isLoading } = useReviewFetch(
     `/api/reviews/toilet?toiletID=${_id}`
   );
-  const { data, error } = useFetch("/api/toilets/" + _id);
+  const { data, error, setData } = useFetch("/api/toilets/" + _id);
   const [showBtn, setShowBtn] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
@@ -49,6 +42,7 @@ const ToiletDetails = () => {
     console.log("tee hee irun");
     numPages.current = Math.ceil(review.length / 5);
     sortReviewByDate(review);
+    console.log(data)
   }, [review]);
 
   // display button when clicked
@@ -106,7 +100,12 @@ const ToiletDetails = () => {
         console.log(res);
         setReview([res.newReview, ...review]);
         setReviewText("");
+        console.log(res.newRating)
         setRating(0);
+        setData(prev => {
+          return {...prev, "rating": res.newRating}
+        })
+        console.log(res.newReview)
         setShowBtn(false);
       });
   };
@@ -123,15 +122,6 @@ const ToiletDetails = () => {
       );
     });
   };
-
-  // handling reply
-  const HandleReply = () => (
-    <div>
-      <form>
-        <textarea required placeholder="Your reply"></textarea>
-      </form>
-    </div>
-  );
 
   const handleReplySubmit = (id) => (e) => {
     e.preventDefault();

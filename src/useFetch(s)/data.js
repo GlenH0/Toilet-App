@@ -2,10 +2,8 @@ import {useState, useEffect} from 'react'
 
 const useFetch = (url) => {
     const [data, setData] = useState([]);
-    const [error, setError] = useState(null); 
-    
-
-
+    const [error, setError] = useState(null);
+ 
     useEffect(() => {
         const abortConst = new AbortController();
 
@@ -20,7 +18,6 @@ const useFetch = (url) => {
         .then((data) => {
             setData(data);
             setError(null);
-            
         })
         .catch((err) => {
             if(err.name === 'AbortError'){
