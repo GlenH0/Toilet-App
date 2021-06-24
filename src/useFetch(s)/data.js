@@ -1,5 +1,9 @@
 import {useState, useEffect} from 'react'
 
+const lala = () => {
+    return 'lol'
+}
+
 const useFetch = (url) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null); 
