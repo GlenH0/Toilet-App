@@ -17,13 +17,6 @@ import Pagination from "@material-ui/lab/Pagination";
 import ReactStars from "react-rating-stars-component";
 import ReplyBox from './detailsComponents/ReplyBox'
 
-<<<<<<< HEAD
-
-
-
-
-=======
->>>>>>> 152d9cb8afa30b27c91b2c9b32e85215b2083029
 const ToiletDetails = () => {
   const { _id } = useParams();
   // show 5 reviews per page
@@ -34,12 +27,7 @@ const ToiletDetails = () => {
   const { review, reviewErr, setReview, isLoading } = useReviewFetch(
     `/api/reviews/toilet?toiletID=${_id}`
   );
-<<<<<<< HEAD
-  const { data, error,setData,toiletRating,setToiletRating} = useFetch("/api/toilets/" + _id);
-  console.log(toiletRating);
-=======
   const { data, error, setData } = useFetch("/api/toilets/" + _id);
->>>>>>> 152d9cb8afa30b27c91b2c9b32e85215b2083029
   const [showBtn, setShowBtn] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
@@ -110,17 +98,10 @@ const ToiletDetails = () => {
         setReviewText("");
         console.log(res.newRating)
         setRating(0);
-<<<<<<< HEAD
-        setData(prevState => {
-            return {...prevState,"rating" : res.newRating} 
-          }
-        )
-=======
         setData(prev => {
           return {...prev, "rating": res.newRating}
         })
         console.log(res.newReview)
->>>>>>> 152d9cb8afa30b27c91b2c9b32e85215b2083029
         setShowBtn(false);
       });
   };
