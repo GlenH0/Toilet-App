@@ -25,7 +25,7 @@ const ToiletDetails = () => {
   const numPages = useRef(null);
   console.log("running");
   const { review, reviewErr, setReview, isLoading } = useReviewFetch(
-    `/api/reviews/toilet?toiletID=${_id}`
+    `/api/reviews/replies/toilet?toiletID=${_id}`
   );
   const { data, error, setData } = useFetch("/api/toilets/" + _id);
   const [showBtn, setShowBtn] = useState(false);
@@ -149,7 +149,14 @@ const ToiletDetails = () => {
           isReply={true}
           reviewText={x.reviewText}
           handleIndividualReply={handleIndividualReply(x)}
-          handleDelete={handleDelete(x)}>
+          handleDelete={handleDelete(x)}
+          replies={x.replies && x.replies.map(reply => (
+            <div key={reply._id}>
+              <p>{reply.replyText}</p>
+            </div>
+          ))}
+          >
+          
           <ReplyBox
             replyText={replyText}
             handleReplyText={(e) => setReplyText(e.target.value)}
@@ -159,6 +166,8 @@ const ToiletDetails = () => {
               setReplyText('')
               setReviewID('')
           }}/>
+          
+    
         </ReviewBox>
       );
     } else {
@@ -172,6 +181,11 @@ const ToiletDetails = () => {
           isReply={false}
           handleIndividualReply={handleIndividualReply(x)}
           handleDelete={handleDelete(x)}
+          replies={x.replies && x.replies.map(reply => (
+          <div key={reply._id}>
+            <p><span className="details-review-content-inputDate">{reply.date.slice(0, 10)}&nbsp;&nbsp;</span>{reply.replyText}</p>
+          </div>
+        ))}
         />
       );
     }

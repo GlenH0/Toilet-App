@@ -19,6 +19,7 @@ const useReviewFetch = (url) => {
                 return res.json();
             })
             .then((review) => {
+                console.log(review);
                 setReview(review);
                 setReviewError(null);
                 setIsLoading(false)

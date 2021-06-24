@@ -30,6 +30,7 @@ const ReviewBox = (props) => {
         <button className="details-reviews-content-replyBtn" onClick={props.handleIndividualReply}>REPLY</button>
         {/* {console.log(x._id)} */}
         {props.isReply && props.children}
+        {props.replies}
       </div>
     </div>
   );
