@@ -11,16 +11,19 @@ import { useState, useRef, useEffect } from "react";
 import "./Details.css";
 import useReviewFetch from "./useFetch(s)/fetchReviews";
 import useReviewPaginationFetch from "./useFetch(s)/fetchReviewPagination";
-import { BsFillTrashFill } from "react-icons/bs";
+// import { BsFillTrashFill } from "react-icons/bs";
 import ReviewBox from "./detailsComponents/ReviewBox";
 import Pagination from "@material-ui/lab/Pagination";
 import ReactStars from "react-rating-stars-component";
 import ReplyBox from './detailsComponents/ReplyBox'
 
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 152d9cb8afa30b27c91b2c9b32e85215b2083029
 const ToiletDetails = () => {
   const { _id } = useParams();
   // show 5 reviews per page
@@ -31,8 +34,12 @@ const ToiletDetails = () => {
   const { review, reviewErr, setReview, isLoading } = useReviewFetch(
     `/api/reviews/toilet?toiletID=${_id}`
   );
+<<<<<<< HEAD
   const { data, error,setData,toiletRating,setToiletRating} = useFetch("/api/toilets/" + _id);
   console.log(toiletRating);
+=======
+  const { data, error, setData } = useFetch("/api/toilets/" + _id);
+>>>>>>> 152d9cb8afa30b27c91b2c9b32e85215b2083029
   const [showBtn, setShowBtn] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
@@ -43,6 +50,7 @@ const ToiletDetails = () => {
   useEffect(() => {
     numPages.current = Math.ceil(review.length / 5);
     sortReviewByDate(review);
+    console.log(data)
   }, [review]);
 
   // display button when clicked
@@ -100,11 +108,19 @@ const ToiletDetails = () => {
         console.log(res);
         setReview([res.newReview, ...review]);
         setReviewText("");
+        console.log(res.newRating)
         setRating(0);
+<<<<<<< HEAD
         setData(prevState => {
             return {...prevState,"rating" : res.newRating} 
           }
         )
+=======
+        setData(prev => {
+          return {...prev, "rating": res.newRating}
+        })
+        console.log(res.newReview)
+>>>>>>> 152d9cb8afa30b27c91b2c9b32e85215b2083029
         setShowBtn(false);
       });
   };
@@ -121,15 +137,6 @@ const ToiletDetails = () => {
       );
     });
   };
-
-  // handling reply
-  const HandleReply = () => (
-    <div>
-      <form>
-        <textarea required placeholder="Your reply"></textarea>
-      </form>
-    </div>
-  );
 
   const handleReplySubmit = (id) => (e) => {
     e.preventDefault();
