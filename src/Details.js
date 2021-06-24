@@ -13,15 +13,9 @@ import useReviewFetch from "./useFetch(s)/fetchReviews";
 import useReviewPaginationFetch from "./useFetch(s)/fetchReviewPagination";
 import { BsFillTrashFill } from "react-icons/bs";
 import ReviewBox from "./detailsComponents/ReviewBox";
-import ReactPaginate from "react-paginate";
 import Pagination from "@material-ui/lab/Pagination";
-
 import ReactStars from "react-rating-stars-component";
-
 import ReplyBox from './detailsComponents/ReplyBox'
-
-
-
 
 
 
@@ -37,7 +31,8 @@ const ToiletDetails = () => {
   const { review, reviewErr, setReview, isLoading } = useReviewFetch(
     `/api/reviews/toilet?toiletID=${_id}`
   );
-  const { data, error } = useFetch("/api/toilets/" + _id);
+  const { data, error,setData,toiletRating,setToiletRating} = useFetch("/api/toilets/" + _id);
+  console.log(toiletRating);
   const [showBtn, setShowBtn] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
@@ -46,7 +41,6 @@ const ToiletDetails = () => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    console.log("tee hee irun");
     numPages.current = Math.ceil(review.length / 5);
     sortReviewByDate(review);
   }, [review]);
@@ -107,6 +101,10 @@ const ToiletDetails = () => {
         setReview([res.newReview, ...review]);
         setReviewText("");
         setRating(0);
+        setData(prevState => {
+            return {...prevState,"rating" : res.newRating} 
+          }
+        )
         setShowBtn(false);
       });
   };
@@ -172,9 +170,8 @@ const ToiletDetails = () => {
               e.preventDefault()
               setReplyText('')
               setReviewID('')
-          }}
-
-          /></ReviewBox>
+          }}/>
+        </ReviewBox>
       );
     } else {
       return (
