@@ -15,7 +15,7 @@ import useReviewPaginationFetch from "./useFetch(s)/fetchReviewPagination";
 import ReviewBox from "./detailsComponents/ReviewBox";
 import Pagination from "@material-ui/lab/Pagination";
 import ReactStars from "react-rating-stars-component";
-import ReplyBox from './detailsComponents/ReplyBox'
+import ReplyBox from "./detailsComponents/ReplyBox";
 
 const ToiletDetails = () => {
   const { _id } = useParams();
@@ -23,7 +23,6 @@ const ToiletDetails = () => {
   const [offset, setOffset] = useState(0);
   //const { review, reviewErr, setReview,numPages,isLoading } = useReviewPaginationFetch(`/api/reviews/toilet?toiletID=${_id}`,offset,5)
   const numPages = useRef(null);
-  console.log("running");
   const { review, reviewErr, setReview, isLoading } = useReviewFetch(
     `/api/reviews/replies/toilet?toiletID=${_id}`
   );
@@ -34,6 +33,7 @@ const ToiletDetails = () => {
   const [reviewID, setReviewID] = useState("");
   const [replyText, setReplyText] = useState("");
   const [page, setPage] = useState(1);
+  const debugCounter = useRef(0);
 
   useEffect(() => {
     numPages.current = Math.ceil(review.length / 5);
@@ -96,12 +96,12 @@ const ToiletDetails = () => {
         console.log(res);
         setReview([res.newReview, ...review]);
         setReviewText("");
-        console.log(res.newRating)
+        console.log(res.newRating);
         setRating(0);
-        setData(prev => {
-          return {...prev, "rating": res.newRating}
-        })
-        console.log(res.newReview)
+        setData((prev) => {
+          return { ...prev, rating: res.newRating };
+        });
+        console.log(res.newReview);
         setShowBtn(false);
       });
   };
@@ -121,7 +121,6 @@ const ToiletDetails = () => {
 
   const handleReplySubmit = (id) => (e) => {
     e.preventDefault();
-    console.log(id);
     const replyBody = { replyText, reviewID: id, date: new Date() };
     fetch("/api/replies/", {
       method: "POST",
@@ -132,9 +131,31 @@ const ToiletDetails = () => {
         return res.json();
       })
       .then((res) => {
-        console.log(res);
-        setReplyText('')
-        setReviewID('')
+        //supposed to set reviews array, and choose the specific reply
+        setReview((prevState) => {
+          debugCounter.current++;
+          console.log(debugCounter.current);
+          let copy = [...prevState];
+          let reviewChanged = copy.filter(
+            (review) => review._id === res.newReply.reviewID
+          );
+          let reviewWithNewReply = {
+            ...reviewChanged[0],
+            replies: [res.newReply, ...reviewChanged[0].replies],
+          };
+
+          console.log(reviewWithNewReply);
+
+          return copy.map((review) => {
+            if (review._id === res.newReply.reviewID) {
+              return reviewWithNewReply;
+            } else {
+              return review;
+            }
+          });
+        });
+        setReplyText("");
+        setReviewID("");
       });
   };
 
@@ -150,24 +171,25 @@ const ToiletDetails = () => {
           reviewText={x.reviewText}
           handleIndividualReply={handleIndividualReply(x)}
           handleDelete={handleDelete(x)}
-          replies={x.replies && x.replies.map(reply => (
-            <div key={reply._id}>
-              <p>{reply.replyText}</p>
-            </div>
-          ))}
-          >
-          
+          replies={
+            x.replies &&
+            x.replies.map((reply) => (
+              <div key={reply._id}>
+                <p>{reply.replyText}</p>
+              </div>
+            ))
+          }
+        >
           <ReplyBox
             replyText={replyText}
             handleReplyText={(e) => setReplyText(e.target.value)}
             handleReplySubmit={handleReplySubmit(x._id)}
             handleReplyCancel={(e) => {
-              e.preventDefault()
-              setReplyText('')
-              setReviewID('')
-          }}/>
-          
-    
+              e.preventDefault();
+              setReplyText("");
+              setReviewID("");
+            }}
+          />
         </ReviewBox>
       );
     } else {
@@ -181,11 +203,19 @@ const ToiletDetails = () => {
           isReply={false}
           handleIndividualReply={handleIndividualReply(x)}
           handleDelete={handleDelete(x)}
-          replies={x.replies && x.replies.map(reply => (
-          <div key={reply._id}>
-            <p><span className="details-review-content-inputDate">{reply.date.slice(0, 10)}&nbsp;&nbsp;</span>{reply.replyText}</p>
-          </div>
-        ))}
+          replies={
+            x.replies &&
+            x.replies.map((reply) => (
+              <div key={reply._id}>
+                <p>
+                  <span className="details-review-content-inputDate">
+                    {reply.date.slice(0, 10)}&nbsp;&nbsp;
+                  </span>
+                  {reply.replyText}
+                </p>
+              </div>
+            ))
+          }
         />
       );
     }
@@ -216,6 +246,8 @@ const ToiletDetails = () => {
       return renderReview(x, false);
     }
   });
+
+  
 
   return (
     <div className="details">

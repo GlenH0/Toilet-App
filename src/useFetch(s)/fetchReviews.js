@@ -4,9 +4,10 @@ const useReviewFetch = (url) => {
     const [review, setReview] = useState([]);
     const [reviewErr, setReviewError] = useState(null); 
     const [isLoading, setIsLoading] = useState(true)
-    console.log('i am invoked');
+    
 
     useEffect(() => {
+        console.log('i am invoked');
         setIsLoading(true)
         const abortConst = new AbortController();
 
