@@ -1,8 +1,13 @@
 import { AiFillMessage, AiFillStar } from "react-icons/ai";
 import { BsFillTrashFill } from "react-icons/bs";
+import {useState} from 'react'
+
+
+
 
 
 const ReviewBox = (props) => {
+  const [showReplies,setShowReplies] = useState(false)
   return (
     <div className="details-review-content">
 
@@ -27,10 +32,11 @@ const ReviewBox = (props) => {
       
       <div className="details-reviews-content-reply">
       {props.rating && <p>{props.rating} stars</p>}
+      <button className="details-reviews-content-replyBtn" onClick={() => setShowReplies(!showReplies)}>Show Replies</button>
         <button className="details-reviews-content-replyBtn" onClick={props.handleIndividualReply}>REPLY</button>
         {/* {console.log(x._id)} */}
         {props.isReply && props.children}
-        {props.replies}
+        {showReplies && props.replies}
       </div>
     </div>
   );

@@ -16,6 +16,7 @@ import ReviewBox from "./detailsComponents/ReviewBox";
 import Pagination from "@material-ui/lab/Pagination";
 import ReactStars from "react-rating-stars-component";
 import ReplyBox from "./detailsComponents/ReplyBox";
+import Replies from "./detailsComponents/Replies"
 
 const ToiletDetails = () => {
   const { _id } = useParams();
@@ -60,6 +61,7 @@ const ToiletDetails = () => {
       <ReactStars
         count={5}
         onChange={(newRating) => setRating(newRating)}
+        value={rating}
         isHalf={true}
         size={28}
         activeColor="#ffd700"
@@ -133,18 +135,17 @@ const ToiletDetails = () => {
       .then((res) => {
         //supposed to set reviews array, and choose the specific reply
         setReview((prevState) => {
-          debugCounter.current++;
-          console.log(debugCounter.current);
           let copy = [...prevState];
-          let reviewChanged = copy.filter(
+          //reviewChanged = [{}]
+          let oldReviewChanged = copy.filter(
             (review) => review._id === res.newReply.reviewID
           );
+          console.log(oldReviewChanged);
           let reviewWithNewReply = {
-            ...reviewChanged[0],
-            replies: [res.newReply, ...reviewChanged[0].replies],
+            ...oldReviewChanged[0],
+            replies: [res.newReply, ...oldReviewChanged[0].replies],
           };
 
-          console.log(reviewWithNewReply);
 
           return copy.map((review) => {
             if (review._id === res.newReply.reviewID) {
@@ -159,7 +160,14 @@ const ToiletDetails = () => {
       });
   };
 
+  const handleShowReplies = (x) => (e) => {
+    e.preventDefault()
+    console.log(x);
+    renderReview(x, true, true);
+  }
+
   function renderReview(x, isReply) {
+    console.log('wee i run');
     if (isReply) {
       return (
         <ReviewBox
@@ -171,14 +179,8 @@ const ToiletDetails = () => {
           reviewText={x.reviewText}
           handleIndividualReply={handleIndividualReply(x)}
           handleDelete={handleDelete(x)}
-          replies={
-            x.replies &&
-            x.replies.map((reply) => (
-              <div key={reply._id}>
-                <p>{reply.replyText}</p>
-              </div>
-            ))
-          }
+          handleShowReplies={handleShowReplies(x)}
+          replies={<Replies replies={x.replies}/>}
         >
           <ReplyBox
             replyText={replyText}
@@ -195,6 +197,7 @@ const ToiletDetails = () => {
     } else {
       return (
         <ReviewBox
+          x={x}
           key={x._id}
           _id={x._id}
           rating={x.rating}
@@ -202,20 +205,9 @@ const ToiletDetails = () => {
           date={x.date}
           isReply={false}
           handleIndividualReply={handleIndividualReply(x)}
+          handleShowReplies={handleShowReplies(x)}
           handleDelete={handleDelete(x)}
-          replies={
-            x.replies &&
-            x.replies.map((reply) => (
-              <div key={reply._id}>
-                <p>
-                  <span className="details-review-content-inputDate">
-                    {reply.date.slice(0, 10)}&nbsp;&nbsp;
-                  </span>
-                  {reply.replyText}
-                </p>
-              </div>
-            ))
-          }
+          replies={<Replies replies={x.replies}/>}
         />
       );
     }
@@ -224,7 +216,6 @@ const ToiletDetails = () => {
   const handleIndividualReply = (x) => (e) => {
     setReviewID(x._id);
     setReplyText("");
-    renderReview(x, true);
   };
 
   const handlePageClick = (e, page) => {
@@ -240,6 +231,7 @@ const ToiletDetails = () => {
   }
 
   const mappedReview = review.slice(offset, 5 + offset).map((x) => {
+    console.log('im rendering');
     if (x._id === reviewID) {
       return renderReview(x, true);
     } else {
@@ -262,9 +254,16 @@ const ToiletDetails = () => {
             <div className="detailsInfo-inside">
               <h2>{data.name}</h2>
 
-              <p style={{ float: "left" }}>
-                <AiFillStar style={{ color: "#aeaeae" }} /> {data.rating} stars
-              </p>
+              <div style={{  justifyContent: "center"}}>
+              {!isLoading && <ReactStars
+                count={5}
+                edit={false}
+                value={data.rating}
+                isHalf={true}
+                size={28}
+                activeColor="#ffd700"
+              />} 
+              </div>
               <br />
 
               <div className="detailsInfo-inside-bidet">
