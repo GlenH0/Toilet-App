@@ -22,7 +22,7 @@ const Home = () => {
                 {error && <div>{error}</div>}
 
                 <div className="btmToilet">
-                    <Carousel show={4}>
+                    <Carousel show={3}>
                         {data.map((x) => (
                             <div className="btmContent" key={x._id}>
                                 <div className="btmImg">
