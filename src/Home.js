@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import useFetch from './useFetch(s)/data'
 import './Home.css'
 import Carousel from './carousel/Carousel'
+import ReactStars from "react-rating-stars-component";
 
 const Home = () => {
     const { data, error } = useFetch('/api/toilets')
@@ -32,7 +33,12 @@ const Home = () => {
                                 </div>
                                 <div className="details">
                                     <h2>{x.name}</h2>
-                                    <p><span>{x.rating}</span> stars</p>
+                                    <ReactStars
+                                        value={x.rating}
+                                        edit={false}
+                                        classNames='btmImg-starRating'
+                                        size={26}
+                                    />
                                 </div>
                             </div>
                         ))}

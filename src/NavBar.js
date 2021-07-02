@@ -1,12 +1,12 @@
-import {Link} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import './NavBar.css';
 
 const NavBar = () => {
     return ( 
         <div className="navBar">
             <div className="links">
-                <Link to="/" className="links-btn" >Home</Link>
-                <Link to="/map" className="links-btn">Map</Link>
+                <NavLink exact activeclass='active' className='links-btn' to="/"  >Home</NavLink>
+                <NavLink activeclass='active' className='links-btn'  to="/map" >Map</NavLink>
             </div>
         </div>
      );

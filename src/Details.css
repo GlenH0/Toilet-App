@@ -143,17 +143,28 @@
   }
   .details-review-content-input {
     font-size: 20px;
-    max-width: 69%;
+    max-width: 80%;
     text-align: left;
+    padding-top: 10px;
   }
   .details-review-content-input span{
     margin-right: 10px;
   }
   .details-review-content-inputDate{
-    font-size: 12px;
+    font-size: 11px;
     margin-left: 10px;
-    margin-bottom: 1px;
     color: #aeaeae;
+    padding-right: 10px;
+  }
+
+  .details-review-content-replies{
+    margin: 20px;
+    margin-bottom: 2px;
+  }
+
+  .details-review-content-repliesText{
+    margin: 0 0 30px 20px;
+    font-size: 16px;
   }
 
   .details-review-content-button {
@@ -192,23 +203,25 @@
   }
   .details-review-all-content{
     display: flex;
+    flex-direction: column;
+    text-align: start;
   }
   
   .details-reviews-content-reply{
     text-align: left;
-    padding-left: 30px;
     font-size: 14px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family:'Lato';
   }
 
   .details-reviews-content-replyBtn {
     border: none;
     background-color: white;
-    margin-top: 10px;
-    text-decoration: underline;
+    margin-top: 20px;
     cursor: pointer;
     margin-bottom: 8px;
     font-size: 12px;
+    font-weight: bold;
+    color: #aeaeae;
   }
   .details-reviews-content-replyBtn:hover {
     color: #1184e8;
@@ -217,7 +230,6 @@
   .details-reviews-content-showreplyBtn{
     border: none;
     background-color: white;
-    margin-top: 10px;
     cursor: pointer;
     margin-bottom: 8px;
     font-size: 12px;

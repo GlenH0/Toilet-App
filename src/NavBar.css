@@ -1,11 +1,13 @@
 /* navbar */
 .navBar{
     position: relative;
+    bottom: 20px !important;
   }
   .links {
     position: absolute;
-    margin-top: 20px;
-    right: 10%;
+    margin-top: 50px;
+    right: 45%;
+    text-align: center;
     transform: translate(20%);
     z-index: 1000;
     
@@ -18,12 +20,12 @@
     font-family: "Lato";
     font-weight: 600;
   }
-  
-  .links-btn:hover{
-    background-color:#aeaeae
+
+  .active{
+    text-decoration: underline !important;
+    color: black !important
   }
 
-
   .links-btn {
-    color: black
+    color: #aeaeae
   }
