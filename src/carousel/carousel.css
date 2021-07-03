@@ -12,8 +12,9 @@
 
 .carousel-content-wrapper {
     overflow: hidden;
-    width: 100%;
+    width: 85%;
     height: 100%;
+    margin: auto;
 }
 
 .carousel-content {
@@ -61,7 +62,7 @@
 }
 
 .left-arrow {
-    left: 10px;
+    left: 190px;
 }
 .left-arrow:hover,  .right-arrow:hover {
     color: black;
@@ -69,7 +70,7 @@
 }
 
 .right-arrow {
-    right: 10px;
+    right: 80px;
 }
 
 @media screen and (max-width: 1600px) and (max-height: 1200px) {

@@ -22,7 +22,7 @@ const ReplyBox = ({replyText,handleReplyCancel,handleReplySubmit,handleReplyText
         required
         value={replyText}
         onChange={handleReplyText}
-        placeholder="Your reply"
+        placeholder=" Your reply"
       ></textarea>
       <ReplySubmitButton replyText={replyText} handleReplyCancel={handleReplyCancel} />
     </form>

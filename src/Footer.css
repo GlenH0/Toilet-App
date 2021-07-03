@@ -2,7 +2,8 @@
 .footer{
     font-family: 'Lato';
     margin: 10px;
-    position:absolute;
+    /* position:absolute; */
     left:0;
     right:0;
+    clear: both !important;
   }

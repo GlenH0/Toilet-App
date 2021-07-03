@@ -4,6 +4,8 @@ import "./Map.css";
 // import  ToiletForm  from "./ToiletForm";
 import Mapbox from './Mapbox/Mapbox'
 
+import { FaSistrix } from "react-icons/fa";
+
 
 const MapComponent = () => {
   
@@ -14,7 +16,10 @@ const MapComponent = () => {
 
   return (
     <div className="map-container">
-      <img src="blur_background.png" alt="" />
+      <div className="map-container-title">
+        <h2><span className='map-container-icon'>F<FaSistrix size={82} color={'#ffb260'}/>nd</span></h2>
+        <h2>Your  <br/> Toilet</h2>
+      </div>
       <Mapbox/>
     </div>
   );

@@ -1,31 +1,39 @@
 /* navbar */
-.navBar{
-    position: relative;
-    bottom: 20px !important;
-  }
   .links {
-    position: absolute;
-    margin-top: 50px;
-    right: 45%;
+    position: fixed;
     text-align: center;
-    transform: translate(20%);
     z-index: 1000;
-    
+    top:0;
+    left: 0;
+    width: 5% !important;
+    height: 100% !important;
     font-size: 1vw;
+    background-image: url(blueBG.jpg);
+    box-shadow: 15px 5px 21px 3px rgba(0,0,0,0.8);
   }
   
   .navBar :link{
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
     font-family: "Lato";
     font-weight: 600;
+    margin: 1vw;
+    padding:1vw 1vh 2px;
   }
 
   .active{
-    text-decoration: underline !important;
-    color: black !important
+    /* text-decoration: underline !important; */
+    border-bottom: 2px solid #ffb260;
+    color: #ffb260 !important
   }
 
   .links-btn {
-    color: #aeaeae
+    color: #aeaeae;
+  }
+
+  .links-logo{
+    width:80%;
+    padding-top: 30px;
+    padding-bottom: 40px;
   }

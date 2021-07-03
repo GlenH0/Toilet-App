@@ -22,6 +22,8 @@ const ReviewBox = (props) => {
           value={props.rating}
           edit={false}
           size={16}
+          activeColor="#ffb260"
+          isHalf={true}
         />}</p>
         <p className="details-review-content-input">
           {props.reviewText}

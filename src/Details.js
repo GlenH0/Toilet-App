@@ -4,10 +4,8 @@ import useFetch from "./useFetch(s)/data";
 import { ImLocation } from "react-icons/im";
 import {
   IoIosCloseCircleOutline,
-  IoIosCheckmarkCircleOutline,
 } from "react-icons/io";
-import { AiFillMessage, AiFillStar } from "react-icons/ai";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Image } from "react";
 import "./Details.css";
 import useReviewFetch from "./useFetch(s)/fetchReviews";
 import useReviewPaginationFetch from "./useFetch(s)/fetchReviewPagination";
@@ -17,6 +15,9 @@ import Pagination from "@material-ui/lab/Pagination";
 import ReactStars from "react-rating-stars-component";
 import ReplyBox from "./detailsComponents/ReplyBox";
 import Replies from "./detailsComponents/Replies"
+// import image
+import bidet from './bidet.png'
+import toiletRoll from './toiletRoll.png'
 
 const ToiletDetails = () => {
   const { _id } = useParams();
@@ -64,8 +65,9 @@ const ToiletDetails = () => {
         value={rating}
         isHalf={true}
         size={28}
-        activeColor="#ffd700"
+        activeColor="#ffb260"
       />
+      <p className='submit-button-info'>🛈 Please make sure that your critique and ratings are filled up to submit.</p>
       <div className="submit-button-buttons">
         <button
           disabled={rating == 0}
@@ -238,8 +240,6 @@ const ToiletDetails = () => {
     }
   });
 
-  
-
   return (
     <div className="details">
       {error && <div>{error}</div>}
@@ -253,14 +253,15 @@ const ToiletDetails = () => {
             <div className="detailsInfo-inside">
               <h2>{data.name}</h2>
 
-              <div style={{  justifyContent: "center"}}>
+              <div>
               {!isLoading && <ReactStars
                 count={5}
                 edit={false}
                 value={data.rating}
                 isHalf={true}
                 size={28}
-                activeColor="#ffd700"
+                activeColor="#ffb260"
+                classNames='detailsInfo-rating'
               />} 
               </div>
               <br />
@@ -268,17 +269,17 @@ const ToiletDetails = () => {
               <div className="detailsInfo-inside-bidet">
                 {data.hasBidet === true && (
                   <div>
-                    <p>
-                      <IoIosCheckmarkCircleOutline style={{ color: "green" }} />{" "}
-                      Bidet Friendly
-                    </p>
+                   
+                    <img src={bidet} className="detailsInfo-bidetImg"/>
+                    <p>Bidet Friendly</p>
+                    
                   </div>
                 )}
 
                 {data.hasBidet === false && (
                   <div>
-                    <IoIosCloseCircleOutline style={{ color: "red" }} /> No
-                    Bidet
+                    <img src={toiletRoll} className="detailsInfo-bidetImg"/>
+                    <p>Toilet Paper Only</p>
                   </div>
                 )}
               </div>
@@ -287,8 +288,8 @@ const ToiletDetails = () => {
                 style={{ textDecoration: "none", color: "#aeaeae" }}
                 to={"/map"}
               >
-                <button>
-                  <ImLocation style={{ color: "#aeaeae" }} /> {data.location}
+                <button className='detailInfos-Btn'>
+                  <ImLocation size={18} style={{ color: "#1184e8" }} /> This way to {data.location}
                 </button>
               </Link>
             </div>
@@ -304,7 +305,7 @@ const ToiletDetails = () => {
             required
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
-            placeholder="Your critique"
+            placeholder=" Your critique"
             onClick={showButton}
           ></textarea>
           {showBtn && <SubmitBtn />}

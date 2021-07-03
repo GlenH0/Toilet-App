@@ -1,4 +1,21 @@
 .InfoPopup-image {
-    height : 100% !important;
-    width : 100%
+    height : 100%;
+    width : 100%;
+    background-size: cover !important;
+}
+
+.InfoPopup-imageContainer{
+    height : 90% !important;
+    width : 90%;
+    margin: auto;
+}
+
+.InfoPopup{
+    font-family: 'Lato';
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+.InfoPopup h2{
+    padding-bottom: 5px;
 }

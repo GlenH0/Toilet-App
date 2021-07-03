@@ -1,6 +1,7 @@
 /* home page */
 .home{
-    width: 100%;
+    max-width: 95%;
+    float: right;
     min-width: 900px;
     overflow: hidden;
   }
@@ -31,7 +32,15 @@
   }
   
   .top button:hover{
-    background-color: black;
+    background-color: #202124;
+  }
+
+  .top button:hover span{
+    display: none;
+  }
+
+  .top button:hover:before{
+    content: '🡲';
   }
   
   .btm h1 {
@@ -62,10 +71,16 @@
     opacity: 0.4;
   }
 
-  .details h2{
-    font-size: 18px;
+  .btmImage-details{
+    margin-bottom: 50px;
+  }
+
+  .btmImage-details h2{
+    font-family: 'Lato';
+    font-size: 20px;
     text-transform: uppercase;
-    padding-bottom: 1px;
+    padding-top: 15px;
+    font-weight: 700;
   }
 
   .btmImg-starRating{
