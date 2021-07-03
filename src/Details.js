@@ -66,7 +66,6 @@ const ToiletDetails = () => {
         size={28}
         activeColor="#ffd700"
       />
-      {rating}
       <div className="submit-button-buttons">
         <button
           disabled={rating == 0}
@@ -167,7 +166,7 @@ const ToiletDetails = () => {
   }
 
   function renderReview(x, isReply) {
-    console.log('wee i run');
+    // console.log('wee i run');
     if (isReply) {
       return (
         <ReviewBox

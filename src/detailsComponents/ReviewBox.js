@@ -1,17 +1,17 @@
 import { AiFillMessage, AiFillStar } from "react-icons/ai";
-import { BsFillTrashFill } from "react-icons/bs";
+import { BsCaretDownFill } from "react-icons/bs";
 import { useState } from 'react'
 import ReactStars from "react-rating-stars-component";
 
 const ReviewBox = (props) => {
   const [showReplies, setShowReplies] = useState(false)
-  const [btnText, setBtnText] = useState('Show Replies')
+  const [btnText, setBtnText] = useState('Show Replies ⌄')
 
   const btnShowReplies = () => {
       setShowReplies(!showReplies)
-      if (btnText === 'Show Replies') {
-        setBtnText('Hide')
-      } else { setBtnText('Show Replies') }
+      if (btnText === 'Show Replies ⌄') {
+        setBtnText('Hide ⌃')
+      } else { setBtnText('Show Replies ⌄') }
     }
 
   return (
