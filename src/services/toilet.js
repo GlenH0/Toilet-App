@@ -1,14 +1,13 @@
-
-
+import API_URL from "../helper/urlConfig";
 
 export async function getToilet(){
-    let toiletData = await fetch('api/toilets/60a69edb016b594ea8d3e47a');
+    let toiletData = await fetch(API_URL + '/api/toilets/60a69edb016b594ea8d3e47a');
     let toiletJSONData = toiletData.json()
     return toiletJSONData
 }
 
 export async function getAllToilets(){
-    let toiletData = await fetch('api/toilets');
+    let toiletData = await fetch(API_URL + '/api/toilets');
     console.log(toiletData);
     let toiletJSONData = toiletData.json()
     return toiletJSONData
@@ -17,7 +16,7 @@ export async function getAllToilets(){
 
 
 export async function patchToilet(toilet){
-    let updatedToiletData = await fetch('api/toilets/60a69edb016b594ea8d3e47a', {
+    let updatedToiletData = await fetch( API_URL + '/api/toilets/60a69edb016b594ea8d3e47a', {
         method : 'PATCH',
         headers: {
             'Content-Type': 'application/json'
@@ -32,7 +31,7 @@ export async function patchToilet(toilet){
 
 
 export async function postToilet(toilet){
-    let updatedToiletData = await fetch('api/toilets', {
+    let updatedToiletData = await fetch(API_URL + '/api/toilets', {
         method : 'POST',
         headers: {
             'Content-Type': 'application/json'

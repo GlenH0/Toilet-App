@@ -2,7 +2,6 @@
   "name": "toilet-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://ntu-toilet-app.herokuapp.com",
   "dependencies": {
     "@mapbox/maki": "^6.2.0",
     "@material-ui/core": "^4.11.4",

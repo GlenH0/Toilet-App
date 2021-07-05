@@ -18,6 +18,7 @@ import Replies from "./detailsComponents/Replies"
 // import image
 import bidet from './bidet.png'
 import toiletRoll from './toiletRoll.png'
+import API_URL from "./helper/urlConfig";
 
 const ToiletDetails = () => {
   const { _id } = useParams();
@@ -36,6 +37,7 @@ const ToiletDetails = () => {
   const [replyText, setReplyText] = useState("");
   const [page, setPage] = useState(1);
   const debugCounter = useRef(0);
+  
 
   useEffect(() => {
     numPages.current = Math.ceil(review.length / 5);
@@ -87,7 +89,7 @@ const ToiletDetails = () => {
     e.preventDefault();
     const critique = { reviewText, rating, toiletID: _id, date: new Date() };
     console.log(rating);
-    fetch("/api/reviews/", {
+    fetch(API_URL + "/api/reviews/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(critique),
@@ -97,6 +99,7 @@ const ToiletDetails = () => {
       })
       .then((res) => {
         console.log(res);
+        console.log(review);
         setReview([res.newReview, ...review]);
         setReviewText("");
         console.log(res.newRating);
@@ -113,7 +116,7 @@ const ToiletDetails = () => {
   const handleDelete = (x) => (e) => {
     e.preventDefault();
 
-    fetch("/api/reviews/" + x._id, {
+    fetch(API_URL + "/api/reviews/" + x._id, {
       method: "DELETE",
     }).then(() => {
       setReview((oldReviews) =>
@@ -125,7 +128,7 @@ const ToiletDetails = () => {
   const handleReplySubmit = (id) => (e) => {
     e.preventDefault();
     const replyBody = { replyText, reviewID: id, date: new Date() };
-    fetch("/api/replies/", {
+    fetch(API_URL + "/api/replies/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(replyBody),
