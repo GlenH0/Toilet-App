@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react'
+import API_URL from '../helper/urlConfig';
 
 const useReviewFetch = (url) => {
     const [review, setReview] = useState([]);
@@ -7,20 +8,17 @@ const useReviewFetch = (url) => {
     
 
     useEffect(() => {
-        console.log('i am invoked');
         setIsLoading(true)
         const abortConst = new AbortController();
 
-            fetch(url, {signal: abortConst.signal})
+            fetch(API_URL + url, {signal: abortConst.signal})
             .then(res => {
-                console.log(res)
                 if(!res.ok){
                     throw Error("NOOB")
                 }
                 return res.json();
             })
             .then((review) => {
-                console.log(review);
                 setReview(review);
                 setReviewError(null);
                 setIsLoading(false)

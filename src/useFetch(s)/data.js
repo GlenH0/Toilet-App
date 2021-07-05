@@ -1,8 +1,6 @@
 import {useState, useEffect} from 'react'
+import API_URL from '../helper/urlConfig';
 
-const lala = () => {
-    return 'lol'
-}
 
 const useFetch = (url) => {
     const [data, setData] = useState([]);
@@ -12,16 +10,14 @@ const useFetch = (url) => {
     useEffect(() => {
         const abortConst = new AbortController();
 
-        fetch(url, {signal: abortConst.signal})
+        fetch(API_URL + url, {signal: abortConst.signal})
         .then(res => {
-            console.log(res)
             if(!res.ok){
                 throw Error("NOOB")
             }
             return res.json();
         })
         .then((data) => {
-            console.log(data.rating);
             setData(data);
             setError(null);
         })

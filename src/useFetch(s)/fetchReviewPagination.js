@@ -1,4 +1,5 @@
 import {useState, useEffect, useRef} from 'react'
+import API_URL from '../helper/urlConfig';
 
 const useReviewPaginationFetch = (url,offset,perPage) => {
     const cache = useRef({})
@@ -30,13 +31,12 @@ const useReviewPaginationFetch = (url,offset,perPage) => {
                 }
                 else {
                     try {
-                        const response = await fetch(url)
+                        const response = await fetch(API_URL + url)
                         const data = await response.json()
                         cache.current[url] = sortReviewByDate(data)
                         let reviewsPerPage = data.slice(offset,perPage+offset) 
                         setReview(reviewsPerPage)
                         numPages.current = Math.ceil(data.length/perPage)
-                        console.log(numPages.current);
                         setReviewError(null)    
                         setIsLoading(false)
                     } catch (error) {
