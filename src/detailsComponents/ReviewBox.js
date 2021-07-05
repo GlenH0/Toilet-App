@@ -8,6 +8,7 @@ const ReviewBox = (props) => {
   const [btnText, setBtnText] = useState('Show Replies ⌄')
 
   const btnShowReplies = () => {
+    console.log(props.x.replies);
       setShowReplies(!showReplies)
       if (btnText === 'Show Replies ⌄') {
         setBtnText('Hide ⌃')

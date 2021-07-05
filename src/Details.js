@@ -40,6 +40,7 @@ const ToiletDetails = () => {
   useEffect(() => {
     numPages.current = Math.ceil(review.length / 5);
     sortReviewByDate(review);
+    console.log(data)
   }, [review]);
 
   // display button when clicked
@@ -85,6 +86,7 @@ const ToiletDetails = () => {
   const handleReviewSubmit = (e) => {
     e.preventDefault();
     const critique = { reviewText, rating, toiletID: _id, date: new Date() };
+    console.log(rating);
     fetch("/api/reviews/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -94,12 +96,15 @@ const ToiletDetails = () => {
         return res.json();
       })
       .then((res) => {
+        console.log(res);
         setReview([res.newReview, ...review]);
         setReviewText("");
+        console.log(res.newRating);
         setRating(0);
         setData((prev) => {
           return { ...prev, rating: res.newRating };
         });
+        console.log(res.newReview);
         setShowBtn(false);
       });
   };
@@ -136,6 +141,7 @@ const ToiletDetails = () => {
           let oldReviewChanged = copy.filter(
             (review) => review._id === res.newReply.reviewID
           );
+          console.log(oldReviewChanged);
           let reviewWithNewReply = {
             ...oldReviewChanged[0],
             replies: [res.newReply, ...oldReviewChanged[0].replies],
@@ -157,10 +163,12 @@ const ToiletDetails = () => {
 
   const handleShowReplies = (x) => (e) => {
     e.preventDefault()
-    renderReview(x, true);
+    console.log(x);
+    renderReview(x, true, true);
   }
 
   function renderReview(x, isReply) {
+    // console.log('wee i run');
     if (isReply) {
       return (
         <ReviewBox
@@ -225,7 +233,7 @@ const ToiletDetails = () => {
   }
 
   const mappedReview = review.slice(offset, 5 + offset).map((x) => {
-
+    console.log('im rendering');
     if (x._id === reviewID) {
       return renderReview(x, true);
     } else {
