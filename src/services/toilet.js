@@ -8,7 +8,7 @@ export async function getToilet(){
 
 export async function getAllToilets(){
     let toiletData = await fetch(API_URL + '/api/toilets');
-    console.log(toiletData);
+    
     let toiletJSONData = toiletData.json()
     return toiletJSONData
 }

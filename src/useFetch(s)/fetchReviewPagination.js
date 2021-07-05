@@ -7,7 +7,6 @@ const useReviewPaginationFetch = (url,offset,perPage) => {
     const [reviewErr, setReviewError] = useState(null);
     const [isLoading, setIsLoading] = useState(true)
     const numPages = useRef(null) 
-    console.log('goddamn is running again');
 
     function sortReviewByDate(reviews){
         return reviews.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) 
@@ -22,7 +21,7 @@ const useReviewPaginationFetch = (url,offset,perPage) => {
 
                 //this is for offset change
                 if (cache.current[API_URL + url]){
-                    console.log('using cache');
+        
                     //update the cache based on new addition to the review
                     //cache.current[url] = review 
                     let reviewsPerPage = cache.current[API_URL + url].slice(offset,perPage+offset) 
