@@ -226,7 +226,7 @@
 
   .details-reviews-content-replyBtn {
     border: none;
-    background-color: white;
+    background-color: aliceblue ;
     margin-top: 20px;
     cursor: pointer;
     margin-bottom: 8px;
@@ -240,7 +240,7 @@
 
   .details-reviews-content-showreplyBtn{
     border: none;
-    background-color: white;
+    background-color: aliceblue;
     cursor: pointer;
     margin-bottom: 8px;
     font-size: 12px;
