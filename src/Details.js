@@ -172,6 +172,7 @@ const ToiletDetails = () => {
     if (isReply) {
       return (
         <ReviewBox
+          x={x}
           key={x._id}
           _id={x._id}
           rating={x.rating}

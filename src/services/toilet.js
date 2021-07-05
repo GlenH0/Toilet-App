@@ -1,3 +1,6 @@
+
+
+
 export async function getToilet(){
     let toiletData = await fetch('api/toilets/60a69edb016b594ea8d3e47a');
     let toiletJSONData = toiletData.json()

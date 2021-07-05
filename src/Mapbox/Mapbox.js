@@ -1,12 +1,10 @@
 import React,  { useRef, useEffect, useState } from "react";
-import { postToilet } from "../services/toilet";
 // import ReactDOM from "react-dom"
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import "./Mapbox.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 // import FormPopup from './FormPopup'
 import Marker from './Marker'
-import TempMarker from './TempMarker'
 // import useFetch from "../useFetch(s)/data";
 import { getAllToilets } from "../services/toilet";
 
@@ -18,7 +16,7 @@ const Mapbox = () => {
 
   const map = useRef(null);
   const mapContainer = useRef(null);
-  const tempMarker = useRef(null);
+
   const [lng, setLng] = useState(103.683632);
   const [lat, setLat] = useState(1.348065);
   const [formLatLng, setFormLatLng] = useState({});

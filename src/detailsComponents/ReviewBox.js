@@ -8,6 +8,7 @@ const ReviewBox = (props) => {
   const [btnText, setBtnText] = useState('Show Replies ⌄')
 
   const btnShowReplies = () => {
+    console.log(props.x.replies);
       setShowReplies(!showReplies)
       if (btnText === 'Show Replies ⌄') {
         setBtnText('Hide ⌃')
@@ -40,7 +41,7 @@ const ReviewBox = (props) => {
 
         {/* {console.log(props.replies.props.replies)} */}
         {/* display button if there are replies only */}
-        {props.replies.props.replies != undefined ? <button className="details-reviews-content-showreplyBtn" onClick={btnShowReplies}>{btnText}</button> : null}
+        {props.x.replies.length !== 0 ? <button className="details-reviews-content-showreplyBtn" onClick={btnShowReplies}>{btnText}</button> : null}
         {showReplies && props.replies}
         {/* {console.log(Object.keys(props.replies.props.replies).length)} */}
       </div>
