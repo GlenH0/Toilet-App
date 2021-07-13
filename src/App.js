@@ -1,6 +1,7 @@
 
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Route, Switch } from 'react-router';
 import Home from './Home.js';
 import NavBar from './NavBar';
 import Map from './Map';
@@ -11,8 +12,8 @@ import NotFound from './Reroute';
 
 function App() {
   return (
-    <Router>
-
+    
+      <Router>
       <div className="App">
         <NavBar />
         <div className="content">
@@ -43,7 +44,7 @@ function App() {
         <Footer />
       </div>
 
-    </Router>
+      </Router>
   );
 }
 

@@ -14,13 +14,14 @@ const InfoPopup = (props) => {
             </div>
             </a> */}
 
-            <BrowserRouter>
-                <Link to={`/toiletdetails/${props._id}`}>
-                <div className='InfoPopup-imageContainer'>
-                <img className="InfoPopup-image" src={props.image_url}></img>
-                </div>
-                </Link>
-            </BrowserRouter>
+            
+                <BrowserRouter>
+                    <Link onClick={() => {window.location.href=`/toiletdetails/${props._id}`}}  >
+                    <div className='InfoPopup-imageContainer'>
+                    <img className="InfoPopup-image" src={props.image_url}></img>
+                    </div>
+                    </Link>
+                </BrowserRouter>
             
             <p><FaMapMarkerAlt style={{color:'#1184e8'}}/> {props.location}</p>
             {/* <p>{props.rating} stars</p> */}
