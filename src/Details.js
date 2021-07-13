@@ -20,6 +20,8 @@ import bidet from './bidet.png'
 import toiletRoll from './toiletRoll.png'
 import API_URL from "./helper/urlConfig";
 
+console.log('haha');
+
 const ToiletDetails = () => {
   const { _id } = useParams();
   // show 5 reviews per page
