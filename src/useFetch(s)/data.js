@@ -1,42 +1,41 @@
-import {useState, useEffect} from 'react'
-import API_URL from '../helper/urlConfig'
+import { useState, useEffect } from "react";
+import API_URL from "../helper/urlConfig";
 
 const lala = () => {
-    return 'lol'
-}
+  return "lol";
+};
 
 const useFetch = (url) => {
-    const [data, setData] = useState([]);
-    const [error, setError] = useState(null); 
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    setIsLoading(true);
+    const abortConst = new AbortController();
+    fetch(API_URL + url, { signal: abortConst.signal })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("NOOB");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setData(data);
+        setError(null);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        if (err.name === "AbortError") {
+        } else {
+          setError(err.message);
+        }
+      });
 
-    useEffect(() => {
-        const abortConst = new AbortController();
+    return () => abortConst.abort();
+  }, [url]);
 
-        fetch(API_URL + url, {signal: abortConst.signal})
-        .then(res => {
-            if(!res.ok){
-                throw Error("NOOB")
-            }
-            return res.json();
-        })
-        .then((data) => {
-            setData(data);
-            setError(null);
-        })
-        .catch((err) => {
-            if(err.name === 'AbortError'){
-                
-            }
-            else{
-                setError(err.message)
-            }
-        })
+  return { data, error, setData, isLoading };
+};
 
-        return () => abortConst.abort()
-    }, [url])
-    
-    return {data,error,setData}
-}
- 
 export default useFetch;

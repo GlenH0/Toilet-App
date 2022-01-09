@@ -2,25 +2,24 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import useFetch from "./useFetch(s)/data";
 import { ImLocation } from "react-icons/im";
-import {
-  IoIosCloseCircleOutline,
-} from "react-icons/io";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 import { useState, useRef, useEffect, Image } from "react";
+import Rating from '@material-ui/lab/Rating';
 import "./Details.css";
 import useReviewFetch from "./useFetch(s)/fetchReviews";
 import useReviewPaginationFetch from "./useFetch(s)/fetchReviewPagination";
 // import { BsFillTrashFill } from "react-icons/bs";
 import ReviewBox from "./detailsComponents/ReviewBox";
 import Pagination from "@material-ui/lab/Pagination";
-import ReactStars from "react-rating-stars-component";
 import ReplyBox from "./detailsComponents/ReplyBox";
-import Replies from "./detailsComponents/Replies"
+import Replies from "./detailsComponents/Replies";
 // import image
-import bidet from './bidet.png'
-import toiletRoll from './toiletRoll.png'
+import bidet from "./assets/bidet.png";
+import toiletRoll from "./assets/toiletRoll.png";
 import API_URL from "./helper/urlConfig";
+import Loading from "./helperComponents/Loading";
 
-console.log('haha');
+console.log("haha");
 
 const ToiletDetails = () => {
   const { _id } = useParams();
@@ -38,8 +37,6 @@ const ToiletDetails = () => {
   const [reviewID, setReviewID] = useState("");
   const [replyText, setReplyText] = useState("");
   const [page, setPage] = useState(1);
-  const debugCounter = useRef(0);
-  
 
   useEffect(() => {
     numPages.current = Math.ceil(review.length / 5);
@@ -62,15 +59,18 @@ const ToiletDetails = () => {
   // submit button
   const SubmitBtn = () => (
     <div className="submit-button">
-      <ReactStars
-        count={5}
-        onChange={(newRating) => setRating(newRating)}
+      <Rating
+        name="review-rating"
+        onChange={(event,newRating) => {
+          console.log(newRating);
+          setRating(newRating)
+        }}
         value={rating}
-        isHalf={true}
-        size={28}
-        activeColor="#ffb260"
       />
-      <p className='submit-button-info'>🛈 Please make sure that your critique and ratings are filled up to submit.</p>
+      <p className="submit-button-info">
+        🛈 Please make sure that your critique and ratings are filled up to
+        submit.
+      </p>
       <div className="submit-button-buttons">
         <button
           disabled={rating == 0}
@@ -98,14 +98,13 @@ const ToiletDetails = () => {
         return res.json();
       })
       .then((res) => {
-       
         setReview([res.newReview, ...review]);
         setReviewText("");
         setRating(0);
         setData((prev) => {
           return { ...prev, rating: res.newRating };
         });
-       
+
         setShowBtn(false);
       });
   };
@@ -142,12 +141,11 @@ const ToiletDetails = () => {
           let oldReviewChanged = copy.filter(
             (review) => review._id === res.newReply.reviewID
           );
-          
+
           let reviewWithNewReply = {
             ...oldReviewChanged[0],
             replies: [res.newReply, ...oldReviewChanged[0].replies],
           };
-
 
           return copy.map((review) => {
             if (review._id === res.newReply.reviewID) {
@@ -163,9 +161,9 @@ const ToiletDetails = () => {
   };
 
   const handleShowReplies = (x) => (e) => {
-    e.preventDefault()
+    e.preventDefault();
     renderReview(x, true, true);
-  }
+  };
 
   function renderReview(x, isReply) {
     if (isReply) {
@@ -181,7 +179,7 @@ const ToiletDetails = () => {
           handleIndividualReply={handleIndividualReply(x)}
           handleDelete={handleDelete(x)}
           handleShowReplies={handleShowReplies(x)}
-          replies={<Replies replies={x.replies}/>}
+          replies={<Replies replies={x.replies} />}
         >
           <ReplyBox
             replyText={replyText}
@@ -208,7 +206,7 @@ const ToiletDetails = () => {
           handleIndividualReply={handleIndividualReply(x)}
           handleShowReplies={handleShowReplies(x)}
           handleDelete={handleDelete(x)}
-          replies={<Replies replies={x.replies}/>}
+          replies={<Replies replies={x.replies} />}
         />
       );
     }
@@ -242,6 +240,11 @@ const ToiletDetails = () => {
   return (
     <div className="details">
       {error && <div>{error}</div>}
+      {!data && (
+        <div>
+          <h1>LOADING</h1>
+        </div>
+      )}
       {data && (
         <div className="detailsContent">
           <div className="detailsImg">
@@ -253,31 +256,29 @@ const ToiletDetails = () => {
               <h2>{data.name}</h2>
 
               <div>
-              {!isLoading && <ReactStars
-                count={5}
-                edit={false}
-                value={data.rating}
-                isHalf={true}
-                size={28}
-                activeColor="#ffb260"
-                classNames='detailsInfo-rating'
-              />} 
+                {!isLoading && (
+                  <div>
+                    <Rating
+                    name="rating-ui"
+                    value={data.rating}
+                    readOnly
+                    />
+                  </div>
+                )}
               </div>
               <br />
 
               <div className="detailsInfo-inside-bidet">
                 {data.hasBidet === true && (
                   <div>
-                   
-                    <img src={bidet} className="detailsInfo-bidetImg"/>
+                    <img src={bidet} className="detailsInfo-bidetImg" />
                     <p>Bidet Friendly</p>
-                    
                   </div>
                 )}
 
                 {data.hasBidet === false && (
                   <div>
-                    <img src={toiletRoll} className="detailsInfo-bidetImg"/>
+                    <img src={toiletRoll} className="detailsInfo-bidetImg" />
                     <p>Toilet Paper Only</p>
                   </div>
                 )}
@@ -287,8 +288,9 @@ const ToiletDetails = () => {
                 style={{ textDecoration: "none", color: "#aeaeae" }}
                 to={"/map"}
               >
-                <button className='detailInfos-Btn'>
-                  <ImLocation size={18} style={{ color: "#1184e8" }} /> This way to {data.location}
+                <button className="detailInfos-Btn">
+                  <ImLocation size={18} style={{ color: "#1184e8" }} /> This way
+                  to {data.location}
                 </button>
               </Link>
             </div>
@@ -312,6 +314,7 @@ const ToiletDetails = () => {
 
         <div className="details-reviews">
           {reviewErr && <div>{reviewErr}</div>}
+          {isLoading && <Loading />}
           {!isLoading && mappedReview}
         </div>
       </div>

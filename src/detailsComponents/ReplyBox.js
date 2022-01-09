@@ -1,22 +1,23 @@
-
-
-
-
-
-const ReplySubmitButton = ({replyText,handleReplyCancel}) => (
-    <div className="submit-button">
-      <div className="submit-button-buttons">
-        <button className={replyText.length ? "gotText" : "noText"}>
-          Submit
-        </button>
-        <button className="submit-button-clear" onClick={handleReplyCancel}>Cancel</button>
-      </div>
+const ReplySubmitButton = ({ replyText, handleReplyCancel }) => (
+  <div className="submit-button">
+    <div className="submit-button-buttons">
+      <button className={replyText.length ? "gotText" : "noText"}>
+        Submit
+      </button>
+      <button className="submit-button-clear" onClick={handleReplyCancel}>
+        Cancel
+      </button>
     </div>
-  );
+  </div>
+);
 
-
-const ReplyBox = ({replyText,handleReplyCancel,handleReplySubmit,handleReplyText}) => (
-    <div>
+const ReplyBox = ({
+  replyText,
+  handleReplyCancel,
+  handleReplySubmit,
+  handleReplyText,
+}) => (
+  <div>
     <form onSubmit={handleReplySubmit}>
       <textarea
         required
@@ -24,10 +25,12 @@ const ReplyBox = ({replyText,handleReplyCancel,handleReplySubmit,handleReplyText
         onChange={handleReplyText}
         placeholder=" Your reply"
       ></textarea>
-      <ReplySubmitButton replyText={replyText} handleReplyCancel={handleReplyCancel} />
+      <ReplySubmitButton
+        replyText={replyText}
+        handleReplyCancel={handleReplyCancel}
+      />
     </form>
   </div>
-)
+);
 
-
-export default ReplyBox 
+export default ReplyBox;
