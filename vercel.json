@@ -1,7 +1,4 @@
 {
-    "public": false,
-    "builds": [
-      { "src": "package.json", "use": "@now/static-build" }
-    ]
-   
-  }
+  "public": false,
+  "builds": [{ "src": "package.json", "use": "@now/static-build" }]
+}

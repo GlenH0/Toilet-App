@@ -1,17 +1,17 @@
 .mapboxgl-canvas-container {
-    height: 80vh;
+  height: 80vh;
 }
 
-.mapbox{
-    width: 80% !important;
-    height: 65% !important;
-    margin: auto;
-    margin-right: 7%;
-    /* position: absolute; */
-    margin-bottom: 0;
-    /* box-shadow: 1px 15px 50px; */
+.mapbox {
+  width: 80% !important;
+  height: 65% !important;
+  margin: auto;
+  margin-right: 7%;
+  /* position: absolute; */
+  margin-bottom: 0;
+  /* box-shadow: 1px 15px 50px; */
 }
 
 .mapbox-container {
-    height: 100%;
+  height: 100%;
 }

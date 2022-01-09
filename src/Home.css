@@ -1,91 +1,89 @@
 /* home page */
-.home{
-    max-width: 95%;
-    float: right;
-    min-width: 900px;
-    overflow: hidden;
-    background-color: aliceblue;
-  }
-  
-  .top{
-    position: relative;
-  }
-  
-  .top img{
-    width: 100%;
-  }
-  
-  .top button {
-    position: absolute;
-    top: 75%;
-    left: 30%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    background-color: #555;
-    color: white;
-    font-size: 24px;
-    padding: 24px 48px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  
-    box-shadow: 2px 4px 8px #555;
-  }
-  
-  .top button:hover{
-    background-color: #202124;
-  }
+.home {
+  max-width: 95%;
+  float: right;
+  min-width: 900px;
+  overflow: hidden;
+  background-color: aliceblue;
+}
 
-  .top button:hover span{
-    display: none;
-  }
+.top {
+  position: relative;
+}
 
-  .top button:hover:before{
-    content: '🡲';
-  }
-  
-  .btm h1 {
-    font-family: "Lato";
-    font-size: 3vw;
-    font-weight: 300;
-    padding: 50px;
-  }
-  
-  .btm .btmTitle {
-    font-family: "Lato";
-    font-size: 3vw;
-    font-weight: 700;
-  }
-  
-  .btmImg {
-    width: 23vw;
-    height: 65vh;
-    margin: auto;
-    box-shadow: 5px 5px 20px -1px #000000
-  }
-  .btmContent img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .btmImg-hover img:hover{
-    opacity: 0.4;
-  }
+.top img {
+  width: 100%;
+}
 
-  .btmImage-details{
-    margin-bottom: 50px;
-  }
+.top button {
+  position: absolute;
+  top: 75%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #555;
+  color: white;
+  font-size: 24px;
+  padding: 24px 48px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
 
-  .btmImage-details h2{
-    font-family: 'Lato';
-    font-size: 20px;
-    text-transform: uppercase;
-    padding-top: 15px;
-    font-weight: 700;
-  }
+  box-shadow: 2px 4px 8px #555;
+}
 
-  .btmImg-starRating{
-    margin: auto;
-  }
-  
-  
+.top button:hover {
+  background-color: #202124;
+}
+
+.top button:hover span {
+  display: none;
+}
+
+.top button:hover:before {
+  content: "🡲";
+}
+
+.btm h1 {
+  font-family: "Lato";
+  font-size: 3vw;
+  font-weight: 300;
+  padding: 50px;
+}
+
+.btm .btmTitle {
+  font-family: "Lato";
+  font-size: 3vw;
+  font-weight: 700;
+}
+
+.btmImg {
+  width: 23vw;
+  height: 65vh;
+  margin: auto;
+  box-shadow: 5px 5px 20px -1px #000000;
+}
+.btmContent img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.btmImg-hover img:hover {
+  opacity: 0.4;
+}
+
+.btmImage-details {
+  margin-bottom: 50px;
+}
+
+.btmImage-details h2 {
+  font-family: "Lato";
+  font-size: 20px;
+  text-transform: uppercase;
+  padding-top: 15px;
+  font-weight: 700;
+}
+
+.btmImg-starRating {
+  margin: auto;
+}

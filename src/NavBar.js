@@ -1,7 +1,7 @@
 import {NavLink} from 'react-router-dom'
 import './NavBar.css';
 import { FaHome, FaMapMarkedAlt } from "react-icons/fa";
-import logo from './logo.png'
+import logo from './assets/logo.png'
 
 const NavBar = () => {
     return ( 

@@ -1,10 +1,10 @@
-import React,  { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 // import ReactDOM from "react-dom"
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import "./Mapbox.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 // import FormPopup from './FormPopup'
-import Marker from './Marker'
+import Marker from "./Marker";
 // import useFetch from "../useFetch(s)/data";
 import { getAllToilets } from "../services/toilet";
 
@@ -21,10 +21,8 @@ const Mapbox = () => {
   const [lat, setLat] = useState(1.348065);
   const [formLatLng, setFormLatLng] = useState({});
   const [zoom, setZoom] = useState(15);
-  const [addToiletMode,setAddToiletMode] = useState(false)
-  const isTempRender = useRef(false)
-
-  
+  const [addToiletMode, setAddToiletMode] = useState(false);
+  const isTempRender = useRef(false);
 
   //useeffect to intialise map
   useEffect(() => {
@@ -35,28 +33,25 @@ const Mapbox = () => {
       style: "mapbox://styles/mapbox/streets-v11",
       center: [lng, lat],
       zoom: zoom,
-      maxBounds : [
-        [103.67934668325415 ,1.3390231935245396 ],
-        [103.69015263599829, 1.3562527379503138] 
-      ]
+      maxBounds: [
+        [103.67934668325415, 1.3390231935245396],
+        [103.69015263599829, 1.3562527379503138],
+      ],
     });
 
-    
-
-    //runs once only 
+    //runs once only
     const fetchToiletData = async () => {
       const toiletData = await getAllToilets();
       toiletData.forEach((toilet) => {
-        Marker(toilet,map.current,true)
+        Marker(toilet, map.current, true);
       });
     };
 
     fetchToiletData();
 
-    return () => map.current.remove()
-  }, []);    
+    return () => map.current.remove();
+  }, []);
   return (
-    
     <div className="mapbox-container">
       <div className="mapbox">
         <div ref={mapContainer} className="mapbox-container" />
