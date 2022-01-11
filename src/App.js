@@ -25,9 +25,11 @@ function App() {
                 <Map />
               </Route>
 
-              <Route exact path="/toiletdetails/:_id">
-                <ToiletDetails />
-              </Route>
+              <Route
+                exact
+                path="/toiletdetails/:_id"
+                children={<ToiletDetails />}
+              />
 
               <Route path="*">
                 <NotFound />
