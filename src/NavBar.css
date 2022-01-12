@@ -33,7 +33,12 @@
 }
 
 .links-logo {
-  width: 80%;
-  padding-top: 30px;
+  width: 39.5px;
+  height: 40x;
+  padding-top: 16px;
   padding-bottom: 40px;
+}
+
+.chevron-left {
+  cursor: pointer;
 }

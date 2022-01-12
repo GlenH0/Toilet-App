@@ -8,17 +8,22 @@ import ToiletDetails from "./Details";
 import ScrollToTop from "./ScrollToTop";
 import Footer from "./Footer";
 import NotFound from "./Reroute";
+import { useState } from 'react';
+import {FaAlignJustify} from "react-icons/fa";
 
 function App() {
+  const [open, setOpen] = useState(false);
+
   return (
     <Router>
       <div className="App">
-        <NavBar />
+        <NavBar open={open} setOpen={setOpen} />
+        {!open && <FaAlignJustify size={30} className="drawer-toggle" onClick={() => setOpen(true)}/>}
         <div className="content">
-          <ScrollToTop>
+          <ScrollToTop> 
             <Switch>
               <Route exact path="/">
-                <Home />
+                <Home open={open} setOpen={setOpen}/>
               </Route>
 
               <Route exact path="/map">

@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+.drawer-toggle {
+  position: fixed;
+  top: 2%;
+  left: 2%;
+  z-index: 10;
+  cursor: pointer;
+
+  transition: width 0.5s, height 0.5s;
+}
+
+.drawer-toggle:hover {
+  height: 35px;
+  width: 35px;
+}
