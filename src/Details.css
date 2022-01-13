@@ -329,14 +329,14 @@
     border: 1px solid #ccc;
     box-shadow: 1px 1px 1px #999;
     resize: none;
-    width: 30rem;
+    width: 20rem;
   }
 
   .review-item {
     display: flex;
     padding-top: 50px;
     flex-direction: column;
-    width: 30rem;
+    width: 20rem;
   }
 }
 
