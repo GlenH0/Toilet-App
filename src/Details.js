@@ -4,7 +4,7 @@ import useFetch from "./useFetch(s)/data";
 import { ImLocation } from "react-icons/im";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { useState, useRef, useEffect, Image } from "react";
-import Rating from '@material-ui/lab/Rating';
+import Rating from "@material-ui/lab/Rating";
 import "./Details.css";
 import useReviewFetch from "./useFetch(s)/fetchReviews";
 import useReviewPaginationFetch from "./useFetch(s)/fetchReviewPagination";
@@ -18,6 +18,8 @@ import bidet from "./assets/bidet.png";
 import toiletRoll from "./assets/toiletRoll.png";
 import API_URL from "./helper/urlConfig";
 import Loading from "./helperComponents/Loading";
+import { FaHome, FaMapMarkedAlt, FaChevronLeft, FaMap } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 
 console.log("haha");
 
@@ -61,9 +63,9 @@ const ToiletDetails = () => {
     <div className="submit-button">
       <Rating
         name="review-rating"
-        onChange={(event,newRating) => {
+        onChange={(event, newRating) => {
           console.log(newRating);
-          setRating(newRating)
+          setRating(newRating);
         }}
         value={rating}
       />
@@ -239,6 +241,15 @@ const ToiletDetails = () => {
 
   return (
     <div className="details">
+      <div className="details-overlay">
+        <NavLink exact activeclass="active" className="links-btn" to="/">
+          <FaHome size={34} />
+        </NavLink>
+        <NavLink activeclass="active" className="links-btn" to="/map">
+          <FaMapMarkedAlt size={34} />
+        </NavLink>
+      </div>
+      
       {error && <div>{error}</div>}
       {!data && (
         <div>
@@ -250,7 +261,6 @@ const ToiletDetails = () => {
           <div className="detailsImg">
             <img src={data.image_url} alt="" />
           </div>
-
           <div className="detailsInfo">
             <div className="detailsInfo-inside">
               <h2>{data.name}</h2>
@@ -258,11 +268,7 @@ const ToiletDetails = () => {
               <div>
                 {!isLoading && (
                   <div>
-                    <Rating
-                    name="rating-ui"
-                    value={data.rating}
-                    readOnly
-                    />
+                    <Rating name="rating-ui" value={data.rating} readOnly />
                   </div>
                 )}
               </div>
@@ -298,27 +304,29 @@ const ToiletDetails = () => {
         </div>
       )}
       <div className="details-input">
-        <form onSubmit={handleReviewSubmit}>
-          <label>
-            THE <span>CRITIQUE</span>
-          </label>
-          <textarea
-            required
-            value={reviewText}
-            onChange={(e) => setReviewText(e.target.value)}
-            placeholder=" Your critique"
-            onClick={showButton}
-          ></textarea>
-          {showBtn && <SubmitBtn />}
-        </form>
-
-        <div className="details-reviews">
+        <div className="review-form">
+          <form onSubmit={handleReviewSubmit}>
+            <label>
+              THE <span>CRITIQUE</span>
+            </label>
+            <textarea
+              className="review-textarea"
+              required
+              value={reviewText}
+              onChange={(e) => setReviewText(e.target.value)}
+              placeholder=" Your critique"
+              onClick={showButton}
+            ></textarea>
+            {showBtn && <SubmitBtn />}
+          </form>
+        </div>
+        <div className="review-list">
           {reviewErr && <div>{reviewErr}</div>}
           {isLoading && <Loading />}
           {!isLoading && mappedReview}
         </div>
       </div>
-      <div id="react-paginate">
+      <div id="react-paginate" className="react-paginate">
         <Pagination
           count={numPages.current}
           onChange={handlePageClick}

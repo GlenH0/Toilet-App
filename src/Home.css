@@ -44,6 +44,10 @@
   content: "🡲";
 }
 
+.btm {
+  text-align: center;
+}
+
 .btm h1 {
   font-family: "Lato";
   font-size: 3vw;

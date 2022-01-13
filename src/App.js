@@ -17,13 +17,13 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <NavBar open={open} setOpen={setOpen} />
-        {!open && <FaAlignJustify size={30} className="drawer-toggle" onClick={() => setOpen(true)}/>}
+       {/*  <NavBar open={open} setOpen={setOpen} />
+        {!open && <FaAlignJustify size={30} className="drawer-toggle" onClick={() => setOpen(true)}/>} */}
         <div className="content">
           <ScrollToTop> 
             <Switch>
               <Route exact path="/">
-                <Home open={open} setOpen={setOpen}/>
+                <Home/>
               </Route>
 
               <Route exact path="/map">
