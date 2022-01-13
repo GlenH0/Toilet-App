@@ -17,7 +17,7 @@ const ReviewBox = (props) => {
   };
 
   return (
-    <div className="details-review-content">
+    <div className="review-item">
       <div className="details-review-all-content">
         <div>
           <AiFillMessage size={30} />
