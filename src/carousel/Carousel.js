@@ -42,24 +42,28 @@ const Carousel = (props) => {
 
   const next = () => {
     if (currentIndex < length - show) {
-      setCurrentIndex((prevState) => prevState + 1);
+      setCurrentIndex((prevState) => prevState + 2);
     }
   };
 
   const prev = () => {
     if (currentIndex > 0) {
-      setCurrentIndex((prevState) => prevState - 1);
+      if (currentIndex >= 2) {
+        setCurrentIndex(prevState => prevState - 2);
+        return;
+      }
+      setCurrentIndex(prevState => prevState -1 )
     }
   };
 
   return (
     <div className="carousel-container">
+      <div className="carousel-wrapper">
       {currentIndex > 0 && (
         <button onClick={prev} className="left-arrow">
           <BsFillCaretLeftFill />
         </button>
       )}
-      <div className="carousel-wrapper">
         <div
           className="carousel-content-wrapper"
           onTouchStart={handleTouchStart}
@@ -68,18 +72,19 @@ const Carousel = (props) => {
           <div
             className={`carousel-content show-${show}`}
             style={{
-              transform: `translateX(-${currentIndex * (100 / show)}%)`,
+              transform: `translateX(-${currentIndex * (100 / 2)}%)`,
             }}
           >
             {children}
           </div>
         </div>
-      </div>
-      {currentIndex < length - show && (
+        {currentIndex < length - show && (
         <button onClick={next} className="right-arrow">
           <BsFillCaretRightFill />
         </button>
       )}
+      </div>
+      
     </div>
   );
 };

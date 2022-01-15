@@ -143,9 +143,9 @@
 
 .details-review-content-input {
   font-size: 20px;
-  max-width: 80%;
   text-align: left;
   padding-top: 10px;
+  word-wrap: break-word;
 }
 .details-review-content-input span {
   margin-right: 10px;
@@ -321,6 +321,31 @@
   width: 50rem;
 }
 
+.react-paginate {
+  display: flex;
+  justify-content: center;
+}
+
+.details-overlay {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  height: 4rem;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-left: 8rem;
+  padding-right: 8rem;
+  padding-top: 1rem;
+  background-color: #f0f8ff;
+  z-index: 10;
+  max-width: 100%;
+}
+
+.links-btn:hover {
+  color: #ffb260 !important;
+}
+
 @media (max-width: 600px) {
   .review-textarea {
     padding: 10px;
@@ -340,23 +365,15 @@
   }
 }
 
-.react-paginate {
-  display: flex;
-  justify-content: center;
-}
-
-.details-overlay {
-  display: flex;
-  justify-content: space-between;
-  position: fixed;
-  height: 4rem;
-  top: 0;
-  left: 15%;
-  right: 15%;
-  background-color: #f0f8ff;
-  z-index: 10;
-}
-
-.links-btn:hover {
-  color: #ffb260 !important;
+@media (max-width: 600px) {
+  .details-overlay {
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    height: 4rem;
+    padding-left: 0;
+    padding-right: 0;
+    background-color: #f0f8ff;
+    z-index: 10;
+  }
 }
