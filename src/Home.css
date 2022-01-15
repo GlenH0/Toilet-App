@@ -2,7 +2,7 @@
 .home {
   max-width: 100%;
   float: right;
-  min-width: 900px;
+  min-width: 350px;
   overflow: hidden;
   background-color: aliceblue;
 }
@@ -15,7 +15,22 @@
   width: 100%;
 }
 
-.top button {
+.map-button {
+  padding: 0.5rem 0.8rem;
+  background-color: steelblue;
+  color: white;
+  cursor: pointer;
+  transition: background-color 1s;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border: 2px solid white;
+  text-decoration: none;
+}
+
+.map-button:hover {
+  background-color: rgb(49, 93, 129);
+}
+
+/* .top button {
   position: absolute;
   top: 75%;
   left: 30%;
@@ -30,9 +45,9 @@
   border-radius: 5px;
 
   box-shadow: 2px 4px 8px #555;
-}
+} */
 
-.top button:hover {
+/* .top button:hover {
   background-color: #202124;
 }
 
@@ -42,7 +57,7 @@
 
 .top button:hover:before {
   content: "🡲";
-}
+} */
 
 .btm {
   text-align: center;
@@ -62,9 +77,10 @@
 }
 
 .btmImg {
-  width: 23vw;
   height: 65vh;
   margin: auto;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   box-shadow: 5px 5px 20px -1px #000000;
 }
 .btmContent img {
@@ -90,4 +106,42 @@
 
 .btmImg-starRating {
   margin: auto;
+}
+
+.home-top-navbar {
+  display: flex;
+  justify-content: space-between;
+  top: 0;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  align-items: center;
+}
+
+.home-top-logo {
+  display: flex;
+  align-items: center;
+  height: 100px;
+  width: 100px;
+  padding: 1rem;
+}
+
+.home-top-logo {
+  height: 100px;
+  width: 100px;
+  padding: 2rem;
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .btmImg {
+    height: 40vh;
+  }
+
+  .home-top-logo {
+    height: 50px;
+    width: 50px;
+    padding: 1rem;
+  }
 }
